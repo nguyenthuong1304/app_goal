@@ -8,7 +8,7 @@
             <i class="fas fa-calendar-week ml-2"></i>
         </a>
 
-    @if( Auth::id() === $goal->user_id )
+    @if( Auth::id() === $goal->user_id)
         <!-- dropdown -->
             <div class="ml-auto card-text">
                 <div class="dropdown">
@@ -57,7 +57,7 @@
             <tbody class="container">
             <tr class="row">
                 <th scope="row" class="col-4 border-top-0 font-weight-bold">Tên mục tiêu</th>
-                <td class="col-8 border-top-0"> {{ $goal->topic }}</th>
+                <td class="col-8 border-top-0"> {{ $goal->topic }} </th>
             </tr>
             @isset($goal->agenda)
                 <tr class="row">
@@ -69,14 +69,14 @@
                 <th scope="row" class="col-4 font-weight-bold">{{ __('common.time') }} bắt đầu</th>
                 <td class="col-8">
                     <i class="fas fa-clock mr-2 text-primary"></i>
-                    {{ date('Y/m/d', strtotime($goal->start_time)) }}
+                    {{ date('d/m/Y', strtotime($goal->start_time)) }}
                 </td>
             </tr>
             <tr class="row">
                 <th scope="row" class="col-4 font-weight-bold">{{ __('common.time') }} kết thúc ( dự kiến )</th>
                 <td class="col-8">
                     <i class="fas fa-clock mr-2 text-primary"></i>
-                    {{ $goal->end_tiem ? date('Y/m/d', strtotime($goal->end_tiem)) : "dd/mm/YYYY" }}
+                    {{ $goal->end_time ? date('d/m/Y', strtotime($goal->end_time)) : "dd/mm/YYYY" }}
                 </td>
             </tr>
             <tr class="row">
@@ -85,6 +85,50 @@
                 </th>
                 <td class="col-8 ">
                     {{ substr($goal->description, 0, 75) }} @if(strlen($goal->description) > 75) ... @endif
+                </td>
+            </tr>
+            <tr class="row">
+                <th scope="row" class="col-4 font-weight-bold">
+                    Trạng thái
+                </th>
+                <td class="col-8 ">
+                    @if($goal->status)
+                        <b class="text-success">Đã xong</b>
+                    @elseif(!$goal->status && strtotime($goal->start_time) > strtotime('now'))
+                        <b class="text-danger">Chưa xong</b>
+                    @else
+                        <b class="text-info">Đang thực hiện</b>
+                    @endif
+                </td>
+            </tr>
+            <tr class="row">
+                <th scope="row" class="col-4 font-weight-bold">
+                    Tiến độ
+                </th>
+                <td class="col-8 ">
+                    <div class="progress" style="height: 20px">
+                        @php
+                            if ($goal->progress <= 25) {
+                                $color = 'bg-danger';
+                            } else if ($goal->progress >= 25 && $goal->progress < 49) {
+                                $color = 'bg-warning';
+                            } else if ($goal->progress >= 49 && $goal->progress <= 75) {
+                                $color = 'bg-info';
+                            } else {
+                                $color = 'bg-success';
+                            }
+                        @endphp
+                        <div
+                          class="progress-bar {{ $color }}"
+                          role="progressbar"
+                          style="width:{{ $goal->progress }}%;color: black"
+                          aria-valuenow="{{ $goal->progress }}"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                            {{ $goal->progress }} %
+                        </div>
+                      </div>
                 </td>
             </tr>
             <tr class="row">

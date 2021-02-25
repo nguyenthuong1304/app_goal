@@ -14,6 +14,9 @@ class Goal extends Model
         'priority',
         'user_id',
         'description',
+        'status',
+        'progress',
+        'remind_update',
     ];
 
     protected $cats = [

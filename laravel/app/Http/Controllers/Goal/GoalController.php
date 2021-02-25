@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\MeetingRequest;
 use App\Client\ZoomJwtClient;
-
+use Carbon\Carbon;
 class GoalController extends Controller
 {
 
@@ -17,11 +17,9 @@ class GoalController extends Controller
     /**
      * @var Goal
      */
-    private $goal;
 
-    public function __construct(ZoomJwtClient $client, Goal $goal) {
+    public function __construct(ZoomJwtClient $client) {
         $this->client = $client;
-        $this->goal = $goal;
         $this->authorizeResource(Goal::class, 'goal');
     }
 
@@ -67,82 +65,53 @@ class GoalController extends Controller
         return view('goals.create');
     }
 
-    public function store(GoalRequest $request)
+    public function store(GoalRequest $request, Goal $goal)
     {
-        // 二重送信対策
         $request->session()->regenerateToken();
         $data = $request->all();
         $data['user_id'] = auth()->user()->id;
-        $this->goal->fill($data)->save();
+        $goal->fill($data)->save();
+        if (isset($data['remind_update'])) {
+            // handle job send mail
+        }
         session()->flash('msg_success', 'Thêm mục tiêu cho bản thân thành công!');
 
         return redirect()->route('goals.index');
-        // ZoomAPIへ、ミーティング作成のリクエスト
-//        $path = 'users/' . config('zoom.zoom_account_email') . '/goals';
-//        $response = $this->client->zoomPost($path, $request->zoomParams());
-//
-//        // レスポンスのミーティング開始日時を、日本時刻に変換
-//        $body = json_decode($response->getBody(), true);
-//        $body['start_time'] = $this->client->toUnixTimeStamp($body['start_time'], $body['timezone']);
-//        $body['start_time'] = date('Y-m-d\TH:i:s', $body['start_time']);
-//
-//        // 作成したミーティング情報をDBに保存
-//        if ($response->getStatusCode() === 201) {  // 201：ミーティング作成成功のHTTPステータスコード
-//            $meeting
-//                ->fill($body + [ 'meeting_id' => $body['id'], 'user_id' => $request->user()->id ])
-//                ->save();
-//
-//            session()->flash('msg_success', 'ミーティングを作成しました');
-//            return redirect()->route('goals.index');
-//        }
-
-        // エラーページにリダイレクト
-        return view('errors.meeting', ['method' => '作成']);
     }
 
-    public function destroy(Meeting $meeting)
+    public function destroy(Goal $goal)
     {
-        // ZoomAPIにミーティング削除のリクエスト
-        $id = $meeting->meeting_id;
-        $path = 'goals/' . $id;
-        $response = $this->client->zoomDelete($path);
+        $goal->delete()
+            ? session()->flash('msg_success', 'Xoá mục tiêu thành công')
+            : session()->flash('msg_error', 'Có lỗi vui lòng thử lại');
 
-        // DBからもミーティングを削除
-        if ($response->getStatusCode() === 204) {  // 204：ミーティング削除成功のHTTPステータスコード
-            $meeting->delete();
+        return redirect()->route('goals.index');
+    }
 
-            session()->flash('msg_success', 'ミーティングを削除しました');
+    public function edit(Goal $goal)
+    {
+        if ($goal->status || $goal->progress == 100) {
+            session()->flash('msg_warning', 'Mục tiêu này đã hoàn thành');
 
             return redirect()->route('goals.index');
         }
-
-        // エラーページにリダイレクト
-        return view('errors.meeting', ['method' => '削除']);
+        return view('goals.edit', ['goal' => $goal]);
     }
 
-    public function edit(Meeting $meeting)
+    public function update(GoalRequest $request, Goal $goal)
     {
-        return view('goals.edit', ['meeting' => $meeting]);
-    }
-
-    public function update(MeetingRequest $request, Meeting $meeting)
-    {
-        // ZoomAPIにミーティング更新のリクエスト
-        $id = $meeting->meeting_id;
-        $path = 'goals/' . $id;
-        $response = $this->client->zoomPatch($path, $request->zoomParams());
-
-        // DBに更新後のミーティングを保存
-        if ($response->getStatusCode() === 204) {  // 204：ミーティング更新成功のHTTPステータスコード
-            $meeting->fill($request->validated())->save();
-
-            session()->flash('msg_success', 'ミーティングを編集しました');
-
-            return redirect()->route('goals.index');
+        $id = $goal->id;
+        $data = $request->validated();
+        if ((isset($data['status']) && $data['status']) || $data['progress'] == 100) {
+            $data['status'] = true;
+            $data['progress'] = 100;
+            $data['end_time'] = date('Y-m-d');
         }
 
-        // エラーページにリダイレクト
-        return view('errors.meeting', ['method' => '更新']);
+        $goal->fill($data)->save();
+        session()->flash('msg_success', 'Cập nhật mục tiêu thành công');
+
+        return redirect()->route('goals.index');
     }
 
 }

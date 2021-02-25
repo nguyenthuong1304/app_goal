@@ -15,7 +15,7 @@
                 {{ $ranked_user->rank}}
             </p>
             <a class="mr-1" href="{{ route('users.show', ['name' => $ranked_user->name]) }}">
-                <img class="user-mini-icon rounded-circle mr-2" src="{{ $ranked_user->profile_image }}">
+                <img class="user-mini-icon rounded-circle mr-2" src="{{ $ranked_user->profile_image ?? '/default.png'}}">
                 Mr. {{$ranked_user->name}}
             </a>
             <p class="h5 ml-auto">{{ $ranked_user->articles_count }} {{ __('common.postm') }}</p>

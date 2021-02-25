@@ -25,11 +25,14 @@ class GoalRequest extends FormRequest
     {
         return [
             'topic' => 'required|string|max:20',
-            'start_time' => 'required|date|after_or_equal:now',
-            'end_time' => 'nullable|date|after_or_equal:now',
+            'start_time' => 'required|date|after_or_equal:yesterday',
+            'end_time' => 'nullable|date|after_or_equal:start_time',
             'priority' => 'nullable|numeric|lte:5|gte:0',
             'agenda' => 'string|max:20|nullable',
             'description' => 'required|string|max:2000|min:5',
+            'remind_update' => 'nullable',
+            'progress' => 'lte:100|gte:0',
+            'status' => 'nullable',
         ];
     }
 }

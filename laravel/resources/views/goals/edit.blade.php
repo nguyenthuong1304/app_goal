@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Zoomミーティング編集')
+@section('title', 'Chỉnh sửa ' . $goal->topic)
 
 @include('nav')
 
@@ -12,14 +12,11 @@
         <div class="card">
           <h2 class="h4 card-header text-center blue-gradient text-white">Tạo mục tiêu</h2>
           <div class="card-body pt-3">
-
             @include('error_card_list')
-
             <div class="my-4">
-              <form method="POST" class="w-75 mx-auto" action="{{ route('goals.update', ['meeting' => $meeting]) }}">
+              <form method="POST" class="w-75 mx-auto" action="{{ route('goals.update', ['goal' => $goal]) }}">
                 @method('PATCH')
                 @include('goals.form')
-
                 <div class="mt-4">
                   <button class="btn btn-block blue-gradient mt-2 mb-2" type="submit" text-while>
                     <span class="h5">Cập nhật</span>
