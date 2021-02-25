@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Goal;
 
+use App\Http\Requests\GoalRequest;
+use App\Models\Goal;
 use App\Models\Meeting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,27 +13,22 @@ use App\Client\ZoomJwtClient;
 class GoalController extends Controller
 {
 
-    // const MEETING_TYPE_INSTANT = 1;
-    const MEETING_TYPE_SCHEDULE = 2;
-    // const MEETING_TYPE_RECURRING = 3;
-    // const MEETING_TYPE_FIXED_RECURRING_FIXED = 8;
-
     private $client;
+    /**
+     * @var Goal
+     */
+    private $goal;
 
-    public function __construct(ZoomJwtClient $client) {
+    public function __construct(ZoomJwtClient $client, Goal $goal) {
         $this->client = $client;
-
-        $this->authorizeResource(Meeting::class, 'meeting');
+        $this->goal = $goal;
+        $this->authorizeResource(Goal::class, 'goal');
     }
 
     public function index(Request $request)
     {
-        ### ユーザー投稿の検索機能 ###
         $search = $request->input('search');
-
-        $query = Meeting::query();
-
-        //もしキーワードがあったら
+        $query = Goal::query();
         if ($search !== null){
             //全角スペースを半角に
             $search_split = mb_convert_kana($search,'s');
@@ -70,29 +67,34 @@ class GoalController extends Controller
         return view('goals.create');
     }
 
-    public function store(MeetingRequest $request, Meeting $meeting)
+    public function store(GoalRequest $request)
     {
         // 二重送信対策
         $request->session()->regenerateToken();
+        $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
+        $this->goal->fill($data)->save();
+        session()->flash('msg_success', 'Thêm mục tiêu cho bản thân thành công!');
 
+        return redirect()->route('goals.index');
         // ZoomAPIへ、ミーティング作成のリクエスト
-        $path = 'users/' . config('zoom.zoom_account_email') . '/goals';
-        $response = $this->client->zoomPost($path, $request->zoomParams());
-
-        // レスポンスのミーティング開始日時を、日本時刻に変換
-        $body = json_decode($response->getBody(), true);
-        $body['start_time'] = $this->client->toUnixTimeStamp($body['start_time'], $body['timezone']);
-        $body['start_time'] = date('Y-m-d\TH:i:s', $body['start_time']);
-
-        // 作成したミーティング情報をDBに保存
-        if ($response->getStatusCode() === 201) {  // 201：ミーティング作成成功のHTTPステータスコード
-            $meeting
-                ->fill($body + [ 'meeting_id' => $body['id'], 'user_id' => $request->user()->id ])
-                ->save();
-
-            session()->flash('msg_success', 'ミーティングを作成しました');
-            return redirect()->route('goals.index');
-        }
+//        $path = 'users/' . config('zoom.zoom_account_email') . '/goals';
+//        $response = $this->client->zoomPost($path, $request->zoomParams());
+//
+//        // レスポンスのミーティング開始日時を、日本時刻に変換
+//        $body = json_decode($response->getBody(), true);
+//        $body['start_time'] = $this->client->toUnixTimeStamp($body['start_time'], $body['timezone']);
+//        $body['start_time'] = date('Y-m-d\TH:i:s', $body['start_time']);
+//
+//        // 作成したミーティング情報をDBに保存
+//        if ($response->getStatusCode() === 201) {  // 201：ミーティング作成成功のHTTPステータスコード
+//            $meeting
+//                ->fill($body + [ 'meeting_id' => $body['id'], 'user_id' => $request->user()->id ])
+//                ->save();
+//
+//            session()->flash('msg_success', 'ミーティングを作成しました');
+//            return redirect()->route('goals.index');
+//        }
 
         // エラーページにリダイレクト
         return view('errors.meeting', ['method' => '作成']);

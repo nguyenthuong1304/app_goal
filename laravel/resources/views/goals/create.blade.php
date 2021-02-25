@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Zoomミーティング作成')
+@section('title', 'Tạo mới mục tiêu cho bản thân')
 
 @section('content')
 

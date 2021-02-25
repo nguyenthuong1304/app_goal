@@ -75,10 +75,7 @@ Route::group(['middleware' => 'auth'], function() {
         // Route::delete('/', 'UserController@destroy')->name('destroy');
     });
 
-    // コメント機能
     Route::resource('/comments', 'CommentController')->only(['store']);
-
-    // Zoomミーティング関連機能(CRUD)
     Route::resource('/goals', 'Goal\GoalController');
 });
 //});
