@@ -10,20 +10,16 @@
     <div class="row">
       <div class="mx-auto col-md-7">
         <div class="card">
-          <h2 class="h4 card-header text-center blue-gradient text-white">Zoom - Tạo một cuộc họp！</h2>
+          <h2 class="h4 card-header text-center blue-gradient text-white">Tạo mục tiêu mới！</h2>
           <div class="card-body pt-3">
-
             @include('error_card_list')
-
             <div class="my-4">
-              <form method="POST" class="w-75 mx-auto" action="{{ route('meetings.store') }}">
+              <form method="POST" class="w-75 mx-auto" action="{{ route('goals.store') }}">
                 @csrf
-
-                @include('meetings.form')
-
+                @include('goals.form')
                <div class="mt-4">
                   <button type="submit" class="btn btn-block blue-gradient">
-                    <span class="h6">Tạo cuộc họp</span>
+                    <span class="h6">Tạo mục tiêu</span>
                   </button>
                </div>
               </form>

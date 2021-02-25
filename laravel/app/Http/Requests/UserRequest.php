@@ -39,6 +39,7 @@ class UserRequest extends FormRequest
                 'profile_image' => 'file|mimes:jpeg,png,jpg,bmb', // |max:2048
                 'self_introduction' => 'string|max:200|nullable',
                 'wake_up_time' => 'required|date_format:"H:i"',
+                'birthday' => 'date_format:Y-m-d|before:today',
             ];
         }
     }
@@ -52,14 +53,12 @@ class UserRequest extends FormRequest
             'profile_image' => 'profile_image',
             'self_introduction' => 'introduction',
             'wake_up_time' => 'wakeup_time',
-
         ];
     }
 
     public function userParams()
     {
         $validated = parent::validated();
-
         if(isset($validated['profile_image'])) {
             ### S3バケットに画像をアップロード ###
 

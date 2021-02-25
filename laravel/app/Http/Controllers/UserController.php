@@ -59,7 +59,6 @@ class UserController extends Controller
 
         $user->fill($request->userParams())->save();
 
-
         session()->flash('msg_success', 'Cập nhật profile thành công');
         return redirect()->route('users.show',['name' => $user->name]);
     }

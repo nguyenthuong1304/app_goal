@@ -52,6 +52,14 @@
                   @endif
                 </div>
                 <div class="form-group">
+                  <label for="email">{{__('common.birthday')}}</label>
+                  @if (Auth::id() == config('user.guest_user_id'))
+                      <input class="form-control" type="text" id="date" name="email" value="{{ $user->birthday }}" readonly>
+                  @else
+                      <input class="form-control" type="date" id="birthday" name="birthday" value="{{ $user->birthday ? $user->birthday->format('Y-m-d') : '' ?? old('birthday') }}">
+                  @endif
+                </div>
+                <div class="form-group">
                   <label for="wake_up_time">
                       {{ __('common.form.goal') }}
                     <small class="blue-grey-text">（04:00 〜 10:00）</small>

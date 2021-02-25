@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
@@ -11,13 +12,12 @@ class CommentController extends Controller
 
     public function store(CommentRequest $request, Comment $comment)
     {
-        // 二重送信対策
         $request->session()->regenerateToken();
 
-        $user = auth()->user();
-        $comment->fill($request->all());
-        $comment->user_id = $user->id;
-        $comment->save();
+        $article = Article::findOrFail($request->article_id);
+        $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
+        $article->comments()->create($data);
 
         session()->flash('msg_success', 'コメントを投稿しました');
 

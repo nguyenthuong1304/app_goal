@@ -79,6 +79,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('/comments', 'CommentController')->only(['store']);
 
     // Zoomミーティング関連機能(CRUD)
-    Route::resource('/meetings', 'Zoom\MeetingController');
+    Route::resource('/goals', 'Goal\GoalController');
 });
 //});

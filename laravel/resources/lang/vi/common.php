@@ -13,6 +13,7 @@ return [
     'day' => 'Ngày',
     'postm' => 'bài',
     'year' => 'Năm',
+    'birthday' => 'Ngày sinh',
     'create_article' => 'Tạo mới bài viết',
     'profile' => 'Hồ sơ',
     'quick_post' => 'Bài đăng nhanh',

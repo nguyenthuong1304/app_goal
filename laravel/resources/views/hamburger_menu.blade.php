@@ -35,7 +35,7 @@
 
   @auth
       <li>
-        <a class="waves-effect waves-light modal-link" href="{{ route('meetings.index') }}">
+        <a class="waves-effect waves-light modal-link" href="{{ route('goals.index') }}">
           <i class="fas fa-video mr-2"></i>
           Zoom
         </a>

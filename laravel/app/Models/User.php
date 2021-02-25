@@ -53,6 +53,8 @@ class User extends Authenticatable
         'status' => 'boolean',
     ];
 
+    protected $appends = ['age'];
+
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
@@ -101,6 +103,11 @@ class User extends Authenticatable
     public function getWakeUpTimeAttribute(): Carbon
     {
         return new Carbon($this->attributes['wake_up_time']);
+    }
+
+    public function getAgeAttribute(): string
+    {
+        return Carbon::parse($this->birthday)->diff(\Carbon\Carbon::now())->format('%y');
     }
 
     /**

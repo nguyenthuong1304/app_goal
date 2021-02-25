@@ -43,7 +43,6 @@
                   </button>
                 </div>
 
-                <!-- クイック投稿ボタン -->
                 <div style="width:45%">
                   <button form="quick-post" type="submit" class="btn btn-block btn-default">
                     <span ><i class="far fa-clock mr-2"></i>{{ __('common.post_a.quick_submit') }}</span>

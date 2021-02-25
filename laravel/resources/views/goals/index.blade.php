@@ -10,13 +10,13 @@
 
     <div class="row">
       <div class="mx-auto col-md-7">
-          @include('meetings.list', compact('meetings'))
+          @include('goals.list', compact('goals'))
 
-          @include('meetings.sppiner')
+          @include('goals.sppiner')
       </div>
     </div>
 
-    @include('meetings.new_post_btn')
+    @include('goals.new_post_btn')
 
   </div>
 

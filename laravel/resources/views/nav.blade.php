@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand navbar-dark sunny-morning-gradient sticky-top">
+<nav class="navbar navbar-expand navbar-dark blue-gradient sticky-top">
 
     <div class="container d-flex justify-content-center px-4">
-        <a class="navbar-brand mr-auto" href="/" style="font-size:1.5rem;"><i class="fas fa-sun mr-1"></i>Goal & Meeting</a>
+        <a class="navbar-brand mr-auto" href="/" style="font-size:1.5rem;"><i class="fas fa-sun mr-1"></i>Goal & Dairy</a>
 
         @include('hamburger_menu')
 
@@ -11,7 +11,7 @@
                 <input class="form-control w-100" name="search" type="search" placeholder="{{ __('common.search_placeholder') }}" value="{{ $search ?? old('search') }}">
             </form>
         @elseif(isset($meetings))
-            <form method="GET" action="{{ route('meetings.index') }}" class="search-form form-inline w-25 d-none d-md-flex">
+            <form method="GET" action="{{ route('goals.index') }}" class="search-form form-inline w-25 d-none d-md-flex">
                 <span></span>
                 <input class="form-control w-100" name="search" type="search" placeholder="{{ __('common.search_meet_placeholder') }}" value="{{ $search ?? old('search') }}">
             </form>
@@ -37,7 +37,7 @@
 
             @auth
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('meetings.index') }}"><i class="fas fa-video mr-1"></i>Zoom</a>
+                    <a class="nav-link" href="{{ route('goals.index') }}"><i class="fas fa-calendar-week"></i>Mục tiêu</a>
                 </li>
 
                 <li class="nav-item">
