@@ -32,8 +32,8 @@ class ArticleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'body' => '本文',
-            'tags' => 'タグ',
+            'body' => 'nội dung bài viết',
+            'tags' => 'tags',
         ];
     }
 

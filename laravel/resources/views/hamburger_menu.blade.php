@@ -5,7 +5,6 @@
         <span></span>
     </a>
 </section>
-
 <nav class="menu-area sunny-morning-gradient d-md-none">
     <ul class="nav-modal mb-0 text-center">
         @guest
@@ -15,14 +14,12 @@
                     {{ __('common.register') }}
                 </a>
             </li>
-
             <li>
                 <a class="waves-effect waves-light modal-link" href="{{ route('login') }}">
                     <i class="fas fa-sign-in-alt mr-1"></i>
                     {{ __('common.login') }}
                 </a>
             </li>
-
             <li class="bg-default rounded">
                 <a class="waves-effect waves-light modal-link" href="{{ route('login.guest') }}">
                     <i class="fas fa-user-check mr-1"></i>
@@ -30,12 +27,11 @@
                 </a>
             </li>
         @endguest
-
         @auth
             <li>
                 <a class="waves-effect waves-light modal-link" href="{{ route('goals.index') }}">
                     <i class="fas fa-video mr-2"></i>
-                    Zoom
+                    Mục tiêu
                 </a>
             </li>
 
@@ -45,7 +41,6 @@
                     {{ __('common.create_article') }}
                 </a>
             </li>
-
             <li>
                 <button form="quick-post" type="submit" class="waves-effect waves-light modal-link button-reset">
                     <i class="far fa-clock mr-1"></i>{{ __('common.quick_post') }}
@@ -53,7 +48,7 @@
             </li>
             <form id="quick-post" method="POST" action="{{ route('articles.store') }}">
                 @csrf
-                <input type="hidden" name="body" value="おはようございます！">
+                <input type="hidden" name="body" value="Ngày mới tốt lành !">
             </form>
 
             <li>
@@ -62,7 +57,6 @@
                     {{ __('common.profile') }}
                 </a>
             </li>
-
             <li>
                 <button form="logout-button" class="button-reset waves-effect waves-light text-white modal-link" type="submit">
                     <i class="fas fa-sign-out-alt mr-1"></i>
