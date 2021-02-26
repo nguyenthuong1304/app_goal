@@ -1,6 +1,4 @@
 $(function() {
-
-  //ドキュメントロード時に、toastr のオプションを設定する
   toastr.options = {
   "closeButton": true,
   "debug": false,
@@ -18,5 +16,4 @@ $(function() {
   "showMethod": "fadeIn",
   "hideMethod": "fadeOut"
   }
-
 });

@@ -39,7 +39,7 @@ class UserRequest extends FormRequest
                 'profile_image' => 'file|mimes:jpeg,png,jpg,bmb', // |max:2048
                 'self_introduction' => 'string|max:200|nullable',
                 'wake_up_time' => 'required|date_format:"H:i"',
-                'birthday' => 'date_format:Y-m-d|before:today',
+                'birthday' => 'nullable|date_format:Y-m-d|before:today',
             ];
         }
     }

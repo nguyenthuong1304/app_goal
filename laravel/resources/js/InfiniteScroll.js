@@ -1,4 +1,3 @@
-// 無限スクロール（inview.js）
 $(function(){
   $(document).on('inview', 'a[infinity-scroll]', function (e, isInView) {
     if (isInView) {
