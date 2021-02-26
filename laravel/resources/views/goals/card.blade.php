@@ -81,8 +81,8 @@
                 <th scope="row" class="col-4 font-weight-bold">
                     Mô tả chi tiết
                 </th>
-                <td class="col-8 ">
-                    {{ substr($goal->description, 0, 75) }} @if(strlen($goal->description) > 75) ... @endif
+                <td class="col-8">
+                    {!! substr($goal->description, 0, 75) !!} @if(strlen($goal->description) > 75) ... @endif
                 </td>
             </tr>
             <tr class="row">
@@ -101,7 +101,17 @@
             </tr>
             <tr class="row">
                 <th scope="row" class="col-4 font-weight-bold">
-                    Tiến độ
+                    Tiến độ <small 
+                        class="text-primary cursor-pointer"
+                        data-toggle="popover"
+                        data-html="true"
+                        >(Cập nhật)</button>
+                    <form id="goal-{{ $goal->id }}" class="d-none">
+                        <div class="row p-2">
+                            <input type="number" name="progress" id="progress" class="form-control form-control-sm">
+                            <input type="text" name="content" id="content" class="form-control form-control-sm">
+                        </div>
+                    </form>
                 </th>
                 <td class="col-8 ">
                     <div class="progress" style="height: 20px">

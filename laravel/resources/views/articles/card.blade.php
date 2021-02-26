@@ -85,7 +85,7 @@
             @endforeach
             <div class="card-body pt-0">
                 <div class="px-3">
-                    {!! nl2br(e( $article->body )) !!}
+                    {!! $article->body !!}
                 </div>
             </div>
             <div class="card-footer py-1 d-flex justify-content-end bg-white">

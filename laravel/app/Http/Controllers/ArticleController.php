@@ -85,7 +85,7 @@ class ArticleController extends Controller
                 session()->flash('msg_achievement', '早起き達成です！');
             }
         } else {
-            session()->flash('msg_success', '投稿が完了しました');
+            session()->flash('msg_success', 'Tạo mới bài viết thành công');
         }
 
         return redirect()->route('articles.index');

@@ -29,3 +29,12 @@
 </div>
 
 @endsection
+
+@section('script')
+<script src="//cdn.ckeditor.com/4.16.0/basic/ckeditor.js"></script>
+<script>
+  $(function(){
+    CKEDITOR.replace($('textarea')[0]);
+  })
+</script>
+@endsection

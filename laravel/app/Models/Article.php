@@ -46,6 +46,11 @@ class Article extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function histories()
+    {
+        return $this->morphMany(Comment::class, 'historable');
+    }
+
     public function achievement_days()
     {
         return $this->belongsToMany(AchievementDay::class, 'users');

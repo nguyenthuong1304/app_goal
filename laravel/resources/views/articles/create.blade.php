@@ -36,7 +36,7 @@
               </form>
 
               <div class="w-75 mx-auto d-flex justify-content-between align-items-start">
-                <!-- 通常の投稿ボタン -->
+
                 <div style="width:45%">
                   <button form="nomal-post" type="submit" class="btn btn-block peach-gradient" >
                     <span class="h6">{{ __('common.send') }}</span>
@@ -56,4 +56,13 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('script')
+<script src="//cdn.ckeditor.com/4.16.0/basic/ckeditor.js"></script>
+<script>
+  $(function(){
+    CKEDITOR.replace($('textarea')[0]);
+  })
+</script>
 @endsection

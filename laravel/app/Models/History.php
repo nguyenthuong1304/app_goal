@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class History extends Model
 {
     protected $fillable = [
         'user_id',
-        'comment',
+        'body',
     ];
 
     public function commentable()

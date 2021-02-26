@@ -8,5 +8,5 @@
 </div>
 <div class="form-group">
   <label></label>
-  <textarea name="body" class="form-control" rows="8" placeholder="Text">{{ $article->body ?? old('body') }}</textarea>
+  <textarea name="body" class="form-control" rows="8" placeholder="Nội dung">{{ $article->body ?? old('body') }}</textarea>
 </div>
