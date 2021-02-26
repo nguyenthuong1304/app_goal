@@ -31,8 +31,9 @@ class ArticleController extends Controller
         };
 
         $articles = $query->with(['user', 'likes', 'tags'])
-                          ->orderBy('created_at', 'desc')
-                          ->paginate(10);
+            ->withCount('likes', 'comments')
+            ->orderByRaw('likes_count desc, created_at desc')
+            ->paginate(5);
 
         if ($request->ajax()) {
             return response()->json([
@@ -93,10 +94,8 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         $tagNames = $article->tags->map(function ($tag) {
-
             return ['text' => $tag->name];
         });
-
         $allTagNames = Tag::all()->map(function ($tag) {
             return ['text' => $tag->name];
         });
@@ -111,13 +110,11 @@ class ArticleController extends Controller
     public function update(ArticleRequest $request, Article $article)
     {
         $article->fill($request->validated())->save();
-
         $article->tags()->detach();
         $request->tags->each(function ($tagName) use ($article) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $article->tags()->attach($tag);
         });
-
         session()->flash('msg_success', '投稿を編集しました');
 
         return redirect()->route('articles.index');
@@ -126,7 +123,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-
         session()->flash('msg_success', 'Xóa bài viết thành công');
 
         return redirect()->route('articles.index');
@@ -137,6 +133,7 @@ class ArticleController extends Controller
         $comments = $article->comments()
                             ->orderBy('created_at', 'desc')
                             ->paginate(5);
+
         return view('articles.show', [
             'article' => $article,
             'comments' => $comments

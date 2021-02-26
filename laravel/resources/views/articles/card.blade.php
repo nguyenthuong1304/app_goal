@@ -45,9 +45,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- dropdown -->
-
-                    <!-- modal -->
                     <div id="modal-delete-{{ $article->id }}" class="modal fade" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -70,7 +67,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- modal -->
                 @endif
 
             </div>
@@ -91,17 +87,18 @@
                 <div class="px-3">
                     {!! nl2br(e( $article->body )) !!}
                 </div>
-
             </div>
             <div class="card-footer py-1 d-flex justify-content-end bg-white">
                 <div class="mr-3 d-flex align-items-center">
-                    <a class="in-link p-1" href="{{ route('articles.show', ['article' => $article]) }}"><i class="far fa-comment fa-fw fa-lg"></i></a>
-                    <p class="mb-0">{{ count($article->comments) }}</p>
+                    <a class="in-link p-1" href="{{ route('articles.show', ['article' => $article]) }}">
+                        <i class="far fa-comment fa-fw fa-lg"></i>
+                    </a>
+                    <p class="mb-0">{{ $article->comments_count }}</p>
                 </div>
                 <div class="d-flex align-items-center">
                     <article-like
                         :initial-is-liked-by='@json($article->isLikedBy(Auth::user()))'
-                        :initial-count-likes='@json($article->count_likes)'
+                        :initial-count-likes='@json($article->likes_count)'
                         :authorized='@json(Auth::check())'
                         endpoint="{{ route('articles.like', ['article' => $article]) }}"
                     >

@@ -40,7 +40,6 @@ class GoalController extends Controller
         $goals = $query->with(['user'])
                        ->orderBy('created_at', 'desc')
                        ->paginate(5);
-
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('goals.list', ['goals' => $goals])->render(),
