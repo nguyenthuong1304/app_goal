@@ -58,6 +58,11 @@ class User extends Authenticatable
 
     protected $appends = ['age'];
 
+    public function goals(): HasMany
+    {
+        return $this->hasMany(Goal::class);
+    }
+
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
