@@ -6,35 +6,35 @@
             ? route('tags.show', ['name' => 'status'])
             : ''
         }}">
-            <p>#status</p>
+            <span class="badge p-1 rounded-pill bg-primary"><i class="fas fa-tags ml-1"></i> status</span>
         </a>
         <a href="{{
             \App\Models\Tag::where('name', 'family')->first()
             ? route('tags.show', ['name' => 'family'])
             : ''
         }}">
-            <p>#family</p>
+            <span class="badge p-1 rounded-pill bg-primary"><i class="fas fa-tags ml-1"></i> family</span>
         </a>
         <a href="{{
             \App\Models\Tag::where('name', 'health')->first()
             ? route('tags.show', ['name' => 'health'])
             : ''
         }}">
-            <p>#health</p>
+            <span class="badge p-1 rounded-pill bg-primary"><i class="fas fa-tags ml-1"></i> health</span>
         </a>
         <a href="{{
             \App\Models\Tag::where('name', 'reflection/awareness')->first()
             ? route('tags.show', ['name' => 'reflection/awareness'])
             : ''
         }}">
-            <p>#reflection/awareness</p>
+            <span class="badge p-1 rounded-pill bg-primary"><i class="fas fa-tags ml-1"></i> reflection/awareness</span>
         </a>
         <a href="{{
             \App\Models\Tag::where('name', 'question')->first()
             ? route('tags.show', ['name' => 'question'])
             : ''
         }}">
-            <p>#question</p>
+            <span class="badge p-1 rounded-pill bg-primary"><i class="fas fa-tags ml-1"></i> question</span>
         </a>
     </div>
 </div>

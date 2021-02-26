@@ -111,6 +111,8 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/facade/flare-client-php" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/facade/ignition" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/mockery/mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/oauth1-client" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/socialite" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

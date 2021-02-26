@@ -18,15 +18,12 @@ class UserController extends Controller
 
     public function show(string $name, Request $request)
     {
-        // ユーザーの早起き達成日数を表示
         $user = $this->user->withCountAchievementDays($name);
 
-        // ユーザー詳細ページのユーザーによる投稿一覧を10件ずつ取得
         $articles = $user->articles()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+                         ->orderBy('created_at', 'desc')
+                         ->paginate(10);
 
-        // 無限スクロールのajax処理
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('articles.list', ['articles' => $articles])->render(),
@@ -43,8 +40,6 @@ class UserController extends Controller
     public function edit(string $name)
     {
         $user = User::where('name', $name)->first();
-
-        // UserPolicyのupdateメソッドでアクセス制限
         $this->authorize('update', $user);
 
         return view('users.edit', ['user' => $user]);
@@ -53,8 +48,6 @@ class UserController extends Controller
     public function update(UserRequest $request, string $name)
     {
         $user = User::where('name', $name)->first();
-
-        // UserPolicyのupdateメソッドでアクセス制限
         $this->authorize('update', $user);
 
         $user->fill($request->userParams())->save();
@@ -66,8 +59,6 @@ class UserController extends Controller
     public function editPassword(string $name)
     {
         $user = User::where('name', $name)->first();
-
-        // UserPolicyのupdateメソッドでアクセス制限
         $this->authorize('update', $user);
 
         return view('users.edit_password', ['user' => $user]);
@@ -76,8 +67,6 @@ class UserController extends Controller
     public function updatePassword(UpdatePasswordRequest $request, string $name)
     {
         $user = User::where('name', $name)->first();
-
-        // UserPolicyのupdateメソッドでアクセス制限
         $this->authorize('update', $user);
 
         $user->password = Hash::make($request->input('new_password'));
@@ -89,15 +78,12 @@ class UserController extends Controller
 
     public function likes(string $name, Request $request)
     {
-        // ユーザーの早起き達成日数を表示
         $user = $this->user->withCountAchievementDays($name);
 
-        // いいねした投稿一覧を10件ずつ取得
         $articles = $user->likes()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+                         ->orderBy('created_at', 'desc')
+                         ->paginate(10);
 
-        // 無限スクロールのajax処理
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('articles.list', ['articles' => $articles])->render(),
@@ -115,8 +101,8 @@ class UserController extends Controller
     {
         $user = $this->user->withCountAchievementDays($name)->load('followings.followers');
         $followings = $user->followings()
-        ->orderBy('created_at', 'desc')
-        ->paginate(5);
+                           ->orderBy('created_at', 'desc')
+                           ->paginate(5);
 
         return view('users.followings', [
             'user' => $user,
@@ -128,8 +114,8 @@ class UserController extends Controller
     {
         $user = $this->user->withCountAchievementDays($name)->load('followers.followers');;
         $followers = $user->followers()
-        ->orderBy('created_at', 'desc')
-        ->paginate(5);
+                          ->orderBy('created_at', 'desc')
+                          ->paginate(5);
 
         return view('users.followers', [
             'user' => $user,
@@ -141,29 +127,26 @@ class UserController extends Controller
     {
         $user = User::where('name', $name)->first();
 
-        if ($user->id === $request->user()->id)
-        {
+        if ($user->id === $request->user()->id) {
             return abort('404', 'Cannot follow yourself.');
         }
 
         $request->user()->followings()->detach($user);
         $request->user()->followings()->attach($user);
 
-        return ['name' => $name];
+        return ['name' => $name, 'count' => $user->followers()->count()];
     }
 
     public function unfollow(Request $request, string $name)
     {
         $user = User::where('name', $name)->first();
 
-        if ($user->id === $request->user()->id)
-        {
+        if ($user->id === $request->user()->id) {
             return abort('404', 'Cannot follow yourself.');
         }
 
         $request->user()->followings()->detach($user);
 
-        return ['name' => $name];
-        }
-
+        return ['name' => $name, 'count' => $user->followers()->count()];
+    }
 }

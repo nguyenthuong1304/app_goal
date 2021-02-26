@@ -21,7 +21,7 @@
                 <div class="form-group text-center">
                   <label for="profile_image">
                     <p class="mb-1">{{ __('common.edit_my_profile') }}</p>
-                    <img class="profile-icon image-upload rounded-circle" src="{{ $user->profile_image }}" alt="プロフィールアイコン">
+                    <img class="profile-icon image-upload rounded-circle" src="{{ $user->profile_image ?? $user->avatar }}" alt="Icon profile">
                     @if (Auth::id() != config('user.guest_user_id'))
                       <input type="file" name="profile_image" id="profile_image" class="d-none" accept="image/*">
                     @endif

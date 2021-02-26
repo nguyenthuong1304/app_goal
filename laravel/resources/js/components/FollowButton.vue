@@ -46,14 +46,18 @@ export default {
 
   buttonText() {
     return this.isFollowedBy
-      ? 'フォロー中'
-      : 'フォロー'
+      ? 'Đã theo dõi'
+      : 'Theo dõi'
     },
   },
   methods: {
+    handleAfterFollow(count) {
+      const Element = document.getElementById("follower").firstChild;
+      Element.innerHTML = count;
+    },
     clickFollow() {
       if (!this.authorized) {
-        alert('フォロー機能はログイン中のみ使用できます')
+        alert('Chức năng theo dõi chỉ có thể được sử dụng khi đã đăng nhập')
         return
       }
 
@@ -62,14 +66,14 @@ export default {
        : this.follow()
     },
     async follow() {
-      const response = await axios.put(this.endpoint)
-
-      this.isFollowedBy = true
+      const res = await axios.put(this.endpoint);
+      this.isFollowedBy = true;
+      this.handleAfterFollow(res.data.count || 0);
     },
     async unfollow() {
-      const response = await axios.delete(this.endpoint)
-
-      this.isFollowedBy = false
+      const res = await axios.delete(this.endpoint);
+      this.isFollowedBy = false;
+      this.handleAfterFollow(res.data.count || 0);
     },
   },
 }

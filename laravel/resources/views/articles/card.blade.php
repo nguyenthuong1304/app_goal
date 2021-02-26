@@ -15,7 +15,7 @@
             <a href="{{ route('users.show', ['name' => $article->user->name]) }}" class="font-weight-bold user-name-link text-dark mr-4">
               {{ $article->user->name }}
             </a>
-            <span class="font-weight-lighter">{{ $article->created_at->format('Y/m/d H:i') }}</span>
+            <span class="font-weight-lighter">{{ $article->created_at->format('Y/m/d') }}</span>
           </p>
           <p class="text-primary m-0">
             <i class="fas fa-clock mr-2"></i>{{ __('common.wakeup_time') }}：{{ $article->user->wake_up_time->format('H:i') }}
@@ -24,15 +24,7 @@
 
         <div class="col-2 rounded peach-gradient d-flex align-items-center justify-content-center p-1">
             <div class="text-white text-center">
-              <p class="small m-0">{{ __('common.wakeup') }}</p>
-              <p class="m-0">
-                <span class="h5 mr-1">{{
-                  $article->user->achievement_days()
-                  ->where('date', '>=', \Carbon\Carbon::now()->startOfMonth()->toDateString())
-                  ->where('date', '<=', \Carbon\Carbon::now()->endOfMonth()->toDateString())
-                  ->count()
-                }}</span>{{ __('common.day') }}
-              </p>
+                <span class="mr-1">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($article->created_at))->diffForHumans() }}</span>
             </div>
         </div>
 

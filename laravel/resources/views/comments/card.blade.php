@@ -2,7 +2,7 @@
   <li class="list-group-item">
     <div class="py-3 w-100 d-flex">
         <a href="{{ route('users.show', ['name' => $comment->user->name]) }}" class="in-link text-dark">
-            <img class="user-icon rounded-circle" src="{{ $comment->user->profile_image }}" alt="Biểu tượng hồ sơ">
+            <img class="user-icon rounded-circle" src="{{ $comment->user->profile_image ?? $comment->user->avatar }}" alt="Icon avatar">
         </a>
         <div class="ml-2 d-flex flex-column">
             <a href="{{ route('users.show', ['name' => $comment->user->name]) }}" class="in-link text-dark">

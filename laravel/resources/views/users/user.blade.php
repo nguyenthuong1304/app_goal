@@ -4,7 +4,7 @@
 
       <div class="col-3 text-center">
         <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
-          <img class="profile-icon rounded-circle" src="{{ $user->profile_image }}" alt="Biểu tượng hồ sơ">
+          <img class="profile-icon rounded-circle" src="{{ $user->profile_image ?? $user->avatar }}" alt="Biểu tượng hồ sơ">
         </a>
       </div>
 
@@ -84,11 +84,11 @@
   </div>
   <div class="card-body">
     <div>
-      <a href="{{ route('users.followings', ['name' => $user->name]) }}" class="text-muted mr-3">
-        {{ $user->count_followings }} {{ __('common.following') }}
+      <a href="{{ route('users.followings', ['name' => $user->name]) }}" id="following" class="text-muted mr-3">
+        <span>{{ $user->count_followings }}</span> {{ __('common.following') }}
       </a>
-      <a href="{{ route('users.followers', ['name' => $user->name]) }}" class="text-muted">
-        {{ $user->count_followers }} {{ __('common.follower') }}
+      <a href="{{ route('users.followers', ['name' => $user->name]) }}" id="follower" class="text-muted">
+        <span>{{ $user->count_followers }}</span> {{ __('common.follower') }}
       </a>
     </div>
   </div>

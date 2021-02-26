@@ -9,7 +9,6 @@
         </a>
 
     @if( Auth::id() === $goal->user_id)
-        <!-- dropdown -->
             <div class="ml-auto card-text">
                 <div class="dropdown">
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,7 +48,6 @@
                     </div>
                 </div>
             </div>
-            <!-- modal -->
         @endif
     </div>
     <div class="card-body p-0">
@@ -73,9 +71,9 @@
                 </td>
             </tr>
             <tr class="row">
-                <th scope="row" class="col-4 font-weight-bold">{{ __('common.time') }} kết thúc ( dự kiến )</th>
+                <th scope="row" class="col-4 font-weight-bold">{{ __('common.time') }} kết thúc</th>
                 <td class="col-8">
-                    <i class="fas fa-clock mr-2 text-primary"></i>
+                    <i class="fas fa-clock mr-2 text-danger"></i>
                     {{ $goal->end_time ? date('d/m/Y', strtotime($goal->end_time)) : "dd/mm/YYYY" }}
                 </td>
             </tr>
@@ -94,7 +92,7 @@
                 <td class="col-8 ">
                     @if($goal->status)
                         <b class="text-success">Đã xong</b>
-                    @elseif(!$goal->status && strtotime($goal->start_time) > strtotime('now'))
+                    @elseif(!$goal->status && strtotime($goal->start_time) < strtotime('now'))
                         <b class="text-danger">Chưa xong</b>
                     @else
                         <b class="text-info">Đang thực hiện</b>

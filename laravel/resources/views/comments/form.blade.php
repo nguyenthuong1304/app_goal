@@ -2,15 +2,14 @@
   <div class="py-3">
       <form method="POST" action="{{ route('comments.store') }}">
           @csrf
-
           <div class="form-group row mb-0">
               <div class="col-md-12 p-3 w-100 d-flex">
-                  <a href="{{ route('users.show', ['name' => Auth::user()->name]) }}" class="in-link text-dark">
-                      <img class="user-icon rounded-circle" src="{{ Auth::user()->profile_image }}" alt="Biểu tượng hồ sơ">
+                  <a href="{{ route('users.show', ['name' => auth()->user()->name]) }}" class="in-link text-dark">
+                      <img class="user-icon rounded-circle" src="{{ auth()->user()->profile_image ?? auth()->user()->avatar }}" alt="Avatar">
                   </a>
                   <div class="ml-2 d-flex flex-column font-weight-bold">
-                      <a href="{{ route('users.show', ['name' => Auth::user()->name]) }}" class="in-link text-dark">
-                          <p class="mb-0">{{ Auth::user()->name }}</p>
+                      <a href="{{ route('users.show', ['name' => auth()->user()->name]) }}" class="in-link text-dark">
+                          <p class="mb-0">{{ auth()->user()->name }}</p>
                       </a>
                   </div>
               </div>

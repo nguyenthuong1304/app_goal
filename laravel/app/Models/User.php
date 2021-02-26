@@ -31,6 +31,9 @@ class User extends Authenticatable
         'wake_up_time',
         'birthday',
         'status',
+        'provider_name',
+        'provider_id',
+        'remember_token',
     ];
 
     /**

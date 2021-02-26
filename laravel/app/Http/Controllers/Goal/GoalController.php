@@ -28,13 +28,8 @@ class GoalController extends Controller
         $search = $request->input('search');
         $query = Goal::query();
         if ($search !== null){
-            //全角スペースを半角に
-            $search_split = mb_convert_kana($search,'s');
-
-            //空白で区切る
-            $search_split2 = preg_split('/[\s]+/', $search_split,-1,PREG_SPLIT_NO_EMPTY);
-
-            //単語をループで回す
+//            $search_split = mb_convert_kana($search,'s');
+            $search_split2 = preg_split('/[\s]+/', $search,-1,PREG_SPLIT_NO_EMPTY);
             foreach($search_split2 as $value)
             {
                 $query->where('topic','like','%'.$value.'%')
@@ -42,10 +37,9 @@ class GoalController extends Controller
             }
         };
 
-        ### ミーティング一覧を、無限スクロールで表示 ###
         $goals = $query->with(['user'])
-                          ->orderBy('created_at', 'desc')
-                          ->paginate(5);
+                       ->orderBy('created_at', 'desc')
+                       ->paginate(5);
 
         if ($request->ajax()) {
             return response()->json([
