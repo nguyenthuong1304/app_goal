@@ -4,7 +4,9 @@ $(function() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+        },
+        beforeSend: xhr => $('.hm-spinner').removeClass('hide'),
+        complete: (xhr, stat) => $('.hm-spinner').addClass('hide'),
     });
 
     // refresh input validate

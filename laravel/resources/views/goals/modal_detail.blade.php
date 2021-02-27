@@ -9,7 +9,11 @@ aria-hidden="true"
         <div class="modal-content">
             <div class="modal-header d-flex">
                 <h5 class="modal-title">
-                    Mục tiêu : {{ $goal->topic }} 
+                    Mục tiêu của <b>
+                        <a href="{{ route('users.show', $goal->user->name) }}">
+                            {{ $goal->user->name }}
+                        </a>
+                    </b> : {{ $goal->topic }} 
                     @if ($goal->is_pin) 
                         <i class="fas fa-thumbtack ml-auto text-primary"></i>
                     @endif
@@ -26,6 +30,32 @@ aria-hidden="true"
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <div class="progress" style="height: 20px">
+                            @php
+                                if ($goal->progress <= 25) {
+                                    $color = 'bg-danger';
+                                } else if ($goal->progress >= 25 && $goal->progress < 49) {
+                                    $color = 'bg-warning';
+                                } else if ($goal->progress >= 49 && $goal->progress <= 75) {
+                                    $color = 'bg-info';
+                                } else {
+                                    $color = 'bg-success';
+                                }
+                            @endphp
+                            <div
+                                class="progress-bar {{ $color }}"
+                                role="progressbar"
+                                style="width:{{ $goal->progress }}%;color: black"
+                                aria-valuenow="{{ $goal->progress }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                id="progress-{{ $goal->id }}"
+                            >
+                                {{ $goal->progress }} %
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         {!! $goal->description !!}
                     </div>

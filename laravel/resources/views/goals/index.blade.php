@@ -4,7 +4,7 @@
   @include('nav')
   <div class="container mt-4">
     <div class="row">
-      <div class="mx-auto col-md-7">
+      <div class="mx-auto col-md-10">
           @include('goals.list', compact('goals'))
           @include('goals.sppiner')
       </div>

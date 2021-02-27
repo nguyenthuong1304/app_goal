@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="py-3">
-        {!! nl2br(e($comment->comment)) !!}
+        {!! $comment->comment !!}
     </div>
   </li>
   @empty

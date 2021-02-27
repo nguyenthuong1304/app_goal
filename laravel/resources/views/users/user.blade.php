@@ -32,7 +32,7 @@
                                 <div>
                                     <p class="small m-0">Đã hoàn thành</p>
                                     <p class="m-0">
-                                        <span class="h5 mr-1">{{ $user->goals()->count()  }}</span> mục tiêu
+                                        <span class="h5 mr-1">{{ $user->goals()->where('status', 1)->count()  }}</span> mục tiêu
                                     </p>
                                 </div>
                             </div>

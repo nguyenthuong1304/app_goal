@@ -4,11 +4,8 @@
   cursor : pointer;
 }
 
-// 投稿ボタン
 @mixin new-post-btn ($right-position, $btn-color: linear-gradient(to bottom, #f5d364, #fca186)) {
-
   $btn-size: 140px;
-
   width: $btn-size;
   height: $btn-size;
   position: fixed;
