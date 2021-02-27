@@ -31,6 +31,7 @@ class GoalRequest extends FormRequest
             'agenda' => 'string|max:20|nullable',
             'description' => 'required|string|max:2000|min:5',
             'remind_update' => 'nullable',
+            'is_pin' => 'nullable',
             'progress' => 'lte:100|gte:0',
             'status' => 'nullable',
         ];

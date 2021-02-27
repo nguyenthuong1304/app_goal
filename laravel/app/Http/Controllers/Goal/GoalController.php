@@ -38,8 +38,11 @@ class GoalController extends Controller
         };
 
         $goals = $query->with(['user'])
+                       ->orderBy('is_pin', 'desc')
                        ->orderBy('created_at', 'desc')
+                       ->orderBy('priority', 'desc')
                        ->paginate(5);
+
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('goals.list', ['goals' => $goals])->render(),
@@ -112,7 +115,7 @@ class GoalController extends Controller
         $this->authorize('updateProgress', $goal);
         if ($request->ajax()) {
            $dataHistory = $request->validate([
-                'body' => 'required|max:500',
+                'body' => 'required|max:200',
                 'progress' => 'required|lte:100|gte:0|numeric',
             ]);
             $dataHistory['previos'] = $goal->progress;
@@ -138,10 +141,18 @@ class GoalController extends Controller
                 $color = 'bg-success';
             }
 
+            if($goal->status) {
+                $status = '<b class="text-success">Đã xong</b>';
+            } elseif(!$goal->status && strtotime($goal->end_time) < strtotime('now')) {
+                $status = '<b class="text-danger">Chưa xong</b>';
+            } else {
+                $status = '<b class="text-info">Đang thực hiện</b>';
+            }
+
             return response()->json([
                 'progress' => $dataHistory['progress'],
                 'color' => $color,
-                'status' => $goal->status,
+                'status' => $status,
             ], 200);
         }
     }

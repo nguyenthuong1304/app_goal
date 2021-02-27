@@ -44,9 +44,17 @@
     <input class="form-control" type="number" min="0" max="100" id="progress" name="progress" value={{ $goal->progress ?? old('progress') }}>
 </div>
 @endif
-<div class="form-group w-40">
-    <label for="remind_update">
-        Nhận thông báo nhắc nhở hàng tuần
-    </label>
-    <input type="checkbox" id="remind_update" name="remind_update" @if($goal->remind_update ?? old('remind_update')) checked @endif value="1">
+<div class="row">
+    <div class="form-group w-40 col-md-5">
+        <label for="remind_update">
+            Nhận thông báo nhắc nhở hàng tuần
+        </label>
+        <input type="checkbox" id="remind_update" name="remind_update" @if($goal->remind_update ?? old('remind_update')) checked @endif value="1">
+    </div>
+    <div class="form-group w-40 col-md-5">
+        <label for="is_pin">
+            Ghim mục tiêu này ?
+        </label>
+        <input type="checkbox" id="is_pin" name="is_pin" @if($goal->is_pin ?? old('is_pin')) checked @endif value="1">
+    </div>
 </div>

@@ -17,6 +17,7 @@ class Goal extends Model
         'status',
         'progress',
         'remind_update',
+        'is_pin',
     ];
 
     protected $cats = [

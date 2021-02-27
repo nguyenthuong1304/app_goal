@@ -16,6 +16,10 @@ $(function () {
                 
                 $('.popover').removeClass('show');
                 form.find('button[type="submit"]').prop('disabled', false);
+                $(`#status-${id}`).html(res.status);
+                if (parseInt(res.progress) === 100) {
+                    $(`#popover-${id}`).remove();
+                }
             });
         });
     });

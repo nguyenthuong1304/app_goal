@@ -7,8 +7,7 @@
             <strong>{{ $goal->user->name }}</strong> &nbsp;Mục tiêu
             <i class="fas fa-calendar-week ml-2"></i>
         </a>
-
-    @if( Auth::id() === $goal->user_id)
+    @if(Auth::id() === $goal->user_id)
             <div class="ml-auto card-text">
                 <div class="dropdown">
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,7 +54,12 @@
             <tbody class="container">
             <tr class="row">
                 <th scope="row" class="col-4 border-top-0 font-weight-bold">Tên mục tiêu</th>
-                <td class="col-8 border-top-0"> {{ $goal->topic }} </th>
+                <td class="col-8 border-top-0">
+                    @if ($goal->is_pin) 
+                        <i class="fas fa-thumbtack ml-auto text-primary"></i>
+                    @endif
+                    {{ $goal->topic }}
+                </th> 
             </tr>
             @isset($goal->agenda)
                 <tr class="row">
@@ -89,10 +93,10 @@
                 <th scope="row" class="col-4 font-weight-bold">
                     Trạng thái
                 </th>
-                <td class="col-8 ">
+                <td class="col-8" id="status-{{ $goal->id }}">
                     @if($goal->status)
                         <b class="text-success">Đã xong</b>
-                    @elseif(!$goal->status && strtotime($goal->start_time) < strtotime('now'))
+                    @elseif(!$goal->status && strtotime($goal->end_time) < strtotime('now'))
                         <b class="text-danger">Chưa xong</b>
                     @else
                         <b class="text-info">Đang thực hiện</b>
@@ -107,6 +111,7 @@
                         class="text-primary cursor-pointer"
                         data-toggle="popover"
                         data-html="true"
+                        id="popover-{{ $goal->id }}"
                         >(Cập nhật)
                             <form id="goal-{{ $goal->id }}" class="d-none form-update-progress">
                                 <div class="form-group">

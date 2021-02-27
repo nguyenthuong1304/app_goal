@@ -6,7 +6,7 @@ return [
     'login_guest' => 'Đăng nhập như khách',
     'logout' => 'Đăng xuất',
     'search_placeholder' => 'Tìm kiếm bài viết',
-    'search_meet_placeholder' => 'Tìm kiếm  cuộc họp',
+    'search_meet_placeholder' => 'Tìm kiếm mục tiêu',
     'main_tag' => 'Những tag chính',
     'rank' => 'Xếp hạng thành tích',
     'month' => 'Tháng',
