@@ -1,5 +1,25 @@
 const { validateFileUpload, readURL } = require("./function");
 $(function() {
+    // setup ajax
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // refresh input validate
+    $('body').on('keyup', '.is-invalid', function(e) {
+        const form = $($(this).closest('form'));
+        $(this).removeClass('is-invalid');
+        $(this).next('.invalid-feedback').remove();
+        if (!form.find('.is-invalid').length) {
+            if (form.find('button[type="submit"]').prop('disabled')) {
+                form.find('button[type="submit"]').prop('disabled', false);
+            }
+        }
+    });
+
+    // clear errors message    
     setTimeout(() => {
         $('.alert-danger').fadeOut();
     }, 3000);

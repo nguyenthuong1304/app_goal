@@ -91,5 +91,10 @@ class GoalPolicy
     {
         //
     }
+
+    public function updateProgress(User $user, Goal $goal)
+    {
+        return (int) $user->id === (int) $goal->user_id;
+    }
 }
 

@@ -36,6 +36,6 @@ class Goal extends Model
 
     public function histories()
     {
-        return $this->morphMany(Comment::class, 'historable');
+        return $this->morphMany(History::class, 'historable');
     }
 }

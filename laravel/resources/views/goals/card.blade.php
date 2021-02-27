@@ -102,7 +102,7 @@
             <tr class="row">
                 <th scope="row" class="col-4 font-weight-bold">
                     Tiến độ 
-                    @if($goal->user_id == auth()->user()->id)
+                    @if($goal->user_id == auth()->user()->id && !$goal->status)
                         <small 
                         class="text-primary cursor-pointer"
                         data-toggle="popover"
@@ -111,7 +111,13 @@
                             <form id="goal-{{ $goal->id }}" class="d-none form-update-progress">
                                 <div class="form-group">
                                     <label>Tiến độ</label>
-                                    <input type="number" name="progress" class="form-control form-control-sm" placeholder="Tiến độ">
+                                    <input
+                                        type="number"
+                                        name="progress"
+                                        class="form-control form-control-sm"
+                                        placeholder="Tiến độ"
+                                        value="{{ $goal->progress }}"
+                                    >
                                 </div>
                                 <div class="form-group">
                                     <label>Chi tiết</label>
@@ -142,6 +148,7 @@
                           aria-valuenow="{{ $goal->progress }}"
                           aria-valuemin="0"
                           aria-valuemax="100"
+                          id="progress-{{ $goal->id }}"
                         >
                             {{ $goal->progress }} %
                         </div>

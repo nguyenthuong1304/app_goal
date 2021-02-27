@@ -107,4 +107,43 @@ class GoalController extends Controller
         return redirect()->route('goals.index');
     }
 
+    public function updateProgress(Request $request, Goal $goal)
+    {
+        $this->authorize('updateProgress', $goal);
+        if ($request->ajax()) {
+           $dataHistory = $request->validate([
+                'body' => 'required|max:500',
+                'progress' => 'required|lte:100|gte:0|numeric',
+            ]);
+            $dataHistory['previos'] = $goal->progress;
+
+            if ($dataHistory['progress'] == 100) {
+                $goal->status = true;
+                $goal->end_time = date('Y-m-d');
+            }
+            $goal->progress = $dataHistory['progress'];
+            $goal->save();
+            $goal->histories()->create([
+                'data' => $dataHistory,
+                'user_id' => $goal->user_id,
+            ]);
+
+            if ($dataHistory['progress'] <= 25) {
+                $color = 'bg-danger';
+            } else if ($dataHistory['progress'] >= 25 && $dataHistory['progress'] < 49) {
+                $color = 'bg-warning';
+            } else if ($dataHistory['progress'] >= 49 && $dataHistory['progress'] <= 75) {
+                $color = 'bg-info';
+            } else {
+                $color = 'bg-success';
+            }
+
+            return response()->json([
+                'progress' => $dataHistory['progress'],
+                'color' => $color,
+                'status' => $goal->status,
+            ], 200);
+        }
+    }
+
 }

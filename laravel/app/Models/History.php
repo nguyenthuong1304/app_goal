@@ -8,7 +8,11 @@ class History extends Model
 {
     protected $fillable = [
         'user_id',
-        'body',
+        'data',
+    ];
+
+    protected $casts = [
+        'data' => 'array'
     ];
 
     public function commentable()
@@ -16,8 +20,8 @@ class History extends Model
         return $this->morphTo();
     }
 
-    public function user()
+    public function goal()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Goal::class);
     }
 }

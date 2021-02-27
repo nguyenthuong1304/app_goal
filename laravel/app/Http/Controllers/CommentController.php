@@ -19,7 +19,7 @@ class CommentController extends Controller
         $data['user_id'] = auth()->user()->id;
         $article->comments()->create($data);
 
-        session()->flash('msg_success', 'コメントを投稿しました');
+        session()->flash('msg_success', 'Đăng bình luận thành công');
 
         return back();
     }

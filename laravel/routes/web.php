@@ -3,7 +3,7 @@
 Auth::routes();
 Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
 Route::get('/', 'ArticleController@index')->name('articles.index');
-Route::get('articles/{article}', 'ArticleController@show')->name('articles.show')->where('article', '[0-9]+'); // 正規表現追加 (※createメソッド実行時に404エラーが発生するため)
+Route::get('articles/{article}', 'ArticleController@show')->name('articles.show')->where('article', '[0-9]+');
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('/comments', 'CommentController')->only(['store']);
     Route::resource('/goals', 'Goal\GoalController');
+    Route::post('update-progress/{goal}', 'Goal\GoalController@updateProgress')->where('goal', '[0-9]+');
 });
 
 Route::get('redirect/{driver}', 'Auth\LoginController@redirectToProvider')
