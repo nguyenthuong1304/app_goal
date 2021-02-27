@@ -101,17 +101,26 @@
             </tr>
             <tr class="row">
                 <th scope="row" class="col-4 font-weight-bold">
-                    Tiến độ <small 
+                    Tiến độ 
+                    @if($goal->user_id == auth()->user()->id)
+                        <small 
                         class="text-primary cursor-pointer"
                         data-toggle="popover"
                         data-html="true"
-                        >(Cập nhật)</button>
-                    <form id="goal-{{ $goal->id }}" class="d-none">
-                        <div class="row p-2">
-                            <input type="number" name="progress" id="progress" class="form-control form-control-sm">
-                            <input type="text" name="content" id="content" class="form-control form-control-sm">
-                        </div>
-                    </form>
+                        >(Cập nhật)
+                            <form id="goal-{{ $goal->id }}" class="d-none form-update-progress">
+                                <div class="form-group">
+                                    <label>Tiến độ</label>
+                                    <input type="number" name="progress" class="form-control form-control-sm" placeholder="Tiến độ">
+                                </div>
+                                <div class="form-group">
+                                    <label>Chi tiết</label>
+                                    <textarea class="form-control form-control-sm" name="body"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                            </form>
+                        </small>
+                    @endif
                 </th>
                 <td class="col-8 ">
                     <div class="progress" style="height: 20px">
