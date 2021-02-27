@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use Illuminate\Http\Request;
+use App\Models\Goal;
 use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
 
@@ -13,15 +13,21 @@ class CommentController extends Controller
     public function store(CommentRequest $request, Comment $comment)
     {
         $request->session()->regenerateToken();
-
-        $article = Article::findOrFail($request->article_id);
+        $request->article_id
+            ? $objModel = Article::findOrFail($request->article_id)
+            : $objModel = Goal::findOrFail($request->goal_id);
+        
         $data = $request->all();
         $data['user_id'] = auth()->user()->id;
-        $article->comments()->create($data);
+        $objModel->comments()->create($data);
 
-        session()->flash('msg_success', 'Đăng bình luận thành công');
+        if ($request->ajax()) {
+            return view('comments.list', ['comments' => $objModel->comments])->render();
+        } else {
+            session()->flash('msg_success', 'Đăng bình luận thành công');
 
-        return back();
+            return back();
+        }
     }
 
 }

@@ -24,16 +24,9 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'article_id' => 'required|integer',
+            'article_id' => 'required_without:goal_id|integer',
+            'goal_id' => 'required_without:article_id|integer',
             'comment' => 'required|string|max:250'
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-            'article_id' => '投稿ID',
-            'comment' => 'コメント'
         ];
     }
 }

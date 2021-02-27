@@ -126,6 +126,7 @@ class GoalController extends Controller
                 'progress' => 'required|lte:100|gte:0|numeric',
             ]);
             $dataHistory['previos'] = $goal->progress;
+            $dataHistory['time'] = date('H:s d-m-Y');
 
             if ($dataHistory['progress'] == 100) {
                 $goal->status = true;

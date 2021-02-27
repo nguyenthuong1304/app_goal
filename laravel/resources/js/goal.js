@@ -40,4 +40,17 @@ $(function () {
         $('#modal-detail-goal').remove();
         $('.modal-backdrop').remove();
     });
+
+    $('.comment-goal').on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            const $this = $(this),
+                  goal_id = $this.data('goal-id');
+
+            formReqAjax($(`#comment-goal-${goal_id}`), {
+                url: 'comments',
+                dataType: "html",
+            }, res => $('#append-comment-'+goal_id).html(res));
+        }
+    });
 });

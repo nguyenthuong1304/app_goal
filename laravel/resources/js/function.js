@@ -37,7 +37,8 @@ export const formReqAjax = (form, req, callbackSuccess, callbackError = null) =>
     return ajaxReq({
         url: req.url,
         data: form.serialize(),
-        method: req.method
+        method: req.method || "POST",
+        dataType: req.dataType || 'JSON',
     }, res => callbackSuccess(res)).catch(err => {
         const error = err.responseJSON;
         const status = err.status;
@@ -54,6 +55,8 @@ export const formReqAjax = (form, req, callbackSuccess, callbackError = null) =>
             callbackError
                 ? callbackError(err)
                 : toastr.warning(error.message);
+        } else {
+            toastr.error(error.message);
         }
     });
 }

@@ -18,7 +18,7 @@
                             {{ session('msg_achievement') }}
                         </p>
                         <p>
-                            <span class="d-inline-block">{{ date('m') }}Sớm　</span>
+                            <span class="d-inline-block">{{ date('m') }}</span>
                             <span class="d-inline-block rounded peach-gradient text-white p-1">
                                 {{
                                   \Auth::user()->achievement_days()

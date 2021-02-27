@@ -2,7 +2,7 @@
     <div class="btn blue-gradient text-center m-0">
         <a href="{{ route("users.show", ["name" => $superUser->name]) }}" class="text-white">
             <p class="h1 mb-0">
-                <img src="{{ $superUser->profile_image }}" alt="Biểu tượng hồ sơ" class="profile-icon rounded-circle">
+                <img src="{{ $superUser->profile_image ?? $superUser->avatar }}" alt="Biểu tượng hồ sơ" class="profile-icon rounded-circle">
             </p>
             <p class="h2 mt-2">{{ $superUser->name }} ({{ $superUser->age }})</p>
             <p class="h5 mt-3">

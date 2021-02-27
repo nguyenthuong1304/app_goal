@@ -24,7 +24,7 @@ class GoalRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic' => 'required|string|max:20',
+            'topic' => 'required|string|max:200',
             'start_time' => 'required|date|after_or_equal:yesterday',
             'end_time' => 'nullable|date|after_or_equal:start_time',
             'priority' => 'nullable|numeric|lte:5|gte:0',

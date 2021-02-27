@@ -65,25 +65,34 @@ aria-hidden="true"
                             <ul class="list-style-none">
                                 @foreach ($goal->histories as $history)
                                     @if($history->data['progress'] < $history->data['previos'])
-                                        <li>
+                                        <li class="d-flex">
                                             <span class="text-danger">
                                                 <i class="fas fa-level-down-alt"></i>
-                                                {{ $history->data['progress'] }}%
+                                                {{ $history->data['progress'] }}% 
                                             </span> - {{ $history->data['body'] }}
+                                            <span class="ml-auto">
+                                                <small><b>{{ $history->data['time'] ?? '-' }}</b></small>
+                                            </span>
                                         </li>
                                     @elseif($history->data['progress'] == $history->data['previos'])
-                                        <li> 
+                                        <li class="d-flex"> 
                                             <span class="text-info">
                                                 <i class="fas fa-grip-lines-vertical"></i>
-                                                {{ $history->data['progress'] }}%
+                                                {{ $history->data['progress'] }}% 
                                             </span> - {{ $history->data['body'] }}
+                                            <span class="ml-auto">
+                                                <small><b>{{ $history->data['time'] ?? '-' }}</b></small>
+                                            </span>
                                         </li>
                                     @else
-                                        <li> 
+                                        <li class="d-flex"> 
                                             <span class="text-success">
                                                 <i class="fas fa-level-up-alt"></i>
-                                                {{ $history->data['progress'] }}%
+                                                {{ $history->data['progress'] }}% 
                                             </span> - {{ $history->data['body'] }}
+                                            <span class="ml-auto">
+                                                <small><b>{{ $history->data['time'] ?? '-' }}</b></small>
+                                            </span>
                                         </li>
                                     @endif
                                 @endforeach
