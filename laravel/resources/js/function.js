@@ -34,29 +34,30 @@ export const readURL = file => {
 }
 
 export const formReqAjax = (form, req, callbackSuccess, callbackError = null) => {
-    $.ajax({
+    return ajaxReq({
         url: req.url,
         data: form.serialize(),
-        dataType: "JSON",
-        method: req.method,
-        success: res => callbackSuccess(res),
-        error: err => {
-            const error = err.responseJSON;
-            const status = err.status;
-            if (status === 422) {
-                const errors = error.errors;
-                Object.keys(errors).forEach(errorKey => {
-                    const input = $(form.find(`[name*="${errorKey}"]`));
-                    input.addClass('is-invalid');
-                    input.after(`<div class="invalid-feedback">${errors[errorKey][0]}</div>`);
-                });
-            } else if (status === 403) {
-                toastr.warning(error.message);
-            } else if (status === 500) {
-                callbackError
-                    ? callbackError(err)
-                    : toastr.warning(error.message);
-            }
+        method: req.method
+    }, res => callbackSuccess(res)).catch(err => {
+        const error = err.responseJSON;
+        const status = err.status;
+        if (status === 422) {
+            const errors = error.errors;
+            Object.keys(errors).forEach(errorKey => {
+                const input = $(form.find(`[name*="${errorKey}"]`));
+                input.addClass('is-invalid');
+                input.after(`<div class="invalid-feedback">${errors[errorKey][0]}</div>`);
+            });
+        } else if (status === 403) {
+            toastr.warning(error.message);
+        } else if (status === 500) {
+            callbackError
+                ? callbackError(err)
+                : toastr.warning(error.message);
         }
     });
+}
+
+export const ajaxReq = ({ url, data = {}, method = "GET", dataType = "JSON"}, callbackSuccess) => {
+    return $.ajax({ url, data, dataType, method, success: res => callbackSuccess(res)});
 }

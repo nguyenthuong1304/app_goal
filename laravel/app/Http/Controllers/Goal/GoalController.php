@@ -94,6 +94,12 @@ class GoalController extends Controller
         return view('goals.edit', ['goal' => $goal]);
     }
 
+    public function show(Goal $goal)
+    {   
+        $goal->load('histories');
+        return view('goals.modal_detail', ['goal' => $goal])->render();
+    }
+
     public function update(GoalRequest $request, Goal $goal)
     {
         $id = $goal->id;
@@ -156,5 +162,4 @@ class GoalController extends Controller
             ], 200);
         }
     }
-
 }

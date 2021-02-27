@@ -1,4 +1,4 @@
-import { formReqAjax } from './function';
+import { formReqAjax, ajaxReq } from './function';
 
 $(function () {
     $('.form-update-progress').each((idx, formEl) => {
@@ -23,4 +23,21 @@ $(function () {
             });
         });
     });
-})
+
+    $('.view-detail').click(function () {
+        const id = $(this).data('id');
+        ajaxReq({ url: `goals/${id}`, dataType: "html"}, res => {
+            $(res).modal('show');
+        });
+    });
+
+    $('body').on('click', '.close-modal', e => {
+        $('#modal-detail-goal').remove();
+        $('.modal-backdrop').remove();
+    });
+
+    $('body').on('hidden.bs.modal', '#modal-detail-goal', function () {
+        $('#modal-detail-goal').remove();
+        $('.modal-backdrop').remove();
+    });
+});

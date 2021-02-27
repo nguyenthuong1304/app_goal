@@ -56,7 +56,7 @@
                 <th scope="row" class="col-4 border-top-0 font-weight-bold">Tên mục tiêu</th>
                 <td class="col-8 border-top-0">
                     @if ($goal->is_pin) 
-                        <i class="fas fa-thumbtack ml-auto text-primary"></i>
+                        <i class="fas fa-thumbtack fa-lg ml-auto text-primary"></i>
                     @endif
                     {{ $goal->topic }}
                 </th> 
@@ -133,31 +133,41 @@
                         </small>
                     @endif
                 </th>
-                <td class="col-8 ">
-                    <div class="progress" style="height: 20px">
-                        @php
-                            if ($goal->progress <= 25) {
-                                $color = 'bg-danger';
-                            } else if ($goal->progress >= 25 && $goal->progress < 49) {
-                                $color = 'bg-warning';
-                            } else if ($goal->progress >= 49 && $goal->progress <= 75) {
-                                $color = 'bg-info';
-                            } else {
-                                $color = 'bg-success';
-                            }
-                        @endphp
-                        <div
-                          class="progress-bar {{ $color }}"
-                          role="progressbar"
-                          style="width:{{ $goal->progress }}%;color: black"
-                          aria-valuenow="{{ $goal->progress }}"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          id="progress-{{ $goal->id }}"
-                        >
-                            {{ $goal->progress }} %
+                <td class="col-8">
+                    <div class="row">
+                        <div class="progress col-md-10 p-0" style="height: 20px">
+                            @php
+                                if ($goal->progress <= 25) {
+                                    $color = 'bg-danger';
+                                } else if ($goal->progress >= 25 && $goal->progress < 49) {
+                                    $color = 'bg-warning';
+                                } else if ($goal->progress >= 49 && $goal->progress <= 75) {
+                                    $color = 'bg-info';
+                                } else {
+                                    $color = 'bg-success';
+                                }
+                            @endphp
+                            <div
+                                class="progress-bar {{ $color }}"
+                                role="progressbar"
+                                style="width:{{ $goal->progress }}%;color: black"
+                                aria-valuenow="{{ $goal->progress }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                id="progress-{{ $goal->id }}"
+                            >
+                                {{ $goal->progress }} %
+                            </div>
                         </div>
-                      </div>
+                        <div class="col-md-2 text-info cursor-pointer">
+                            <i 
+                                data-target="#modal-detail-goal" 
+                                class="fas fa-eye fa-lg view-detail" 
+                                alt="Xem chi tiết"
+                                data-id="{{ $goal->id }}"
+                            ></i>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr class="row">
