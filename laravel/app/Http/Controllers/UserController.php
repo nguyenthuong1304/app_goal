@@ -19,10 +19,9 @@ class UserController extends Controller
     public function show(string $name, Request $request)
     {
         $user = $this->user->withCountAchievementDays($name);
-
         $articles = $user->articles()
                          ->orderBy('created_at', 'desc')
-                         ->paginate(10);
+                         ->paginate(5);
 
         if ($request->ajax()) {
             return response()->json([
@@ -148,5 +147,10 @@ class UserController extends Controller
         $request->user()->followings()->detach($user);
 
         return ['name' => $name, 'count' => $user->followers()->count()];
+    }
+
+    public function profileUpdate(Request $request)
+    {
+        # code...
     }
 }

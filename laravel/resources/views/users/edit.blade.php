@@ -7,7 +7,7 @@
 @section('content')
     <div class="container my-5">
         <div class="row">
-            <div class="mx-auto col-md-7">
+            <div class="mx-auto col-md-6">
                 <div class="card">
                     <h2 class="h4 card-header text-center sunny-morning-gradient text-white">{{ __('common.edit_profile') }}</h2>
                     <div class="card-body">
@@ -81,6 +81,30 @@
                                         <span class="h6">{{__('common.save')}}</span>
                                     </button>
                                     <a href="{{ route('users.edit_password', ['name' => $user->name]) }}">{{__('common.change_pwd')}}</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mx-auto col-md-6">
+                <div class="card">
+                    <h2 class="h4 card-header text-center sunny-morning-gradient text-white">Cập nhật chi tiết hồ sơ</h2>
+                    <div class="card-body">
+                        @include('error_card_list')
+                        <div class="user-form my-4">
+                            <form method="POST" action="{{ route('profile-update', ['user' => $user]) }}">
+                               @csrf
+                               <div class="form-group">
+                                    <label for="name">
+                                        {{ __('common.form.username') }}
+                                        <small class="blue-grey-text">（{{ __('common.form.username_plhd') }}）</small>
+                                    </label>
+                                    @if (Auth::id() == config('user.guest_user_id'))
+                                        <input class="form-control" type="text" id="name" name="name" value="{{ $user->name }}" readonly>
+                                    @else
+                                        <input class="form-control" type="text" id="name" name="name" value="{{ $user->name ?? old('name') }}">
+                                    @endif
                                 </div>
                             </form>
                         </div>

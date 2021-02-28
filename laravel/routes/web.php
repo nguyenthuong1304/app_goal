@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::patch('/update_password', 'UserController@updatePassword')->name('update_password');
         // Route::delete('/', 'UserController@destroy')->name('destroy');
     });
+    Route::post('profile-update/{user}', 'UserController@profileUpdate')->where('user', '[0-9]+')->name('profile-update');
 
     Route::resource('/comments', 'CommentController')->only(['store', 'destroy']);
     Route::resource('/goals', 'Goal\GoalController');

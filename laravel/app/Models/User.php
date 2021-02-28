@@ -88,6 +88,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Article::class, 'likes')->withTimestamps();
     }
 
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
     public function isFollowedBy(?User $user): bool
     {
         return $user
@@ -141,7 +146,6 @@ class User extends Authenticatable
 
     public function ranking()
     {
-        // 早起き達成日数のランキングを取得
         $ranked_users =  User::withCount(['articles' => function ($query) {
             $query
                 ->where('created_at', '>=', Carbon::now()->startOfMonth()->toDateString())

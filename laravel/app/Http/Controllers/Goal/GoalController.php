@@ -8,18 +8,11 @@ use App\Models\Meeting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\MeetingRequest;
-use App\Client\ZoomJwtClient;
 use Carbon\Carbon;
 class GoalController extends Controller
 {
 
-    private $client;
-    /**
-     * @var Goal
-     */
-
-    public function __construct(ZoomJwtClient $client) {
-        $this->client = $client;
+    public function __construct() {
         $this->authorizeResource(Goal::class, 'goal');
     }
 

@@ -39,6 +39,7 @@ $(function () {
     $('body').on('hidden.bs.modal', '#modal-detail-goal', function () {
         $('#modal-detail-goal').remove();
         $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
     });
 
     $('.comment-goal').on('keyup', function (e) {
