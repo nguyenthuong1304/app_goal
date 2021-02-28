@@ -180,7 +180,7 @@
         </table>
     </div>
     <div class="card-footer py-1 d-flex bg-white">
-        <div class="mr-3 p-2 d-flex align-items-center justify-content-between w-100">
+        <div class="mr-3 p-2 d-flex align-items-center justify-content-between w-100 parent-div">
             <form id="comment-goal-{{ $goal->id }}" class="flex-1" onsubmit="return false;">
                 <input
                     type="text" 
@@ -202,7 +202,7 @@
             >
                 <i class="far fa-comment fa-fw fa-lg"></i>
             </a>
-            <p class="mb-0">{{ $goal->comments_count }}</p>
+            <p class="mb-0 count-cmt" id="count-cmt-{{ $goal->id }}">{{ $goal->comments_count }}</p>
         </div>
     </div>
     <div class="collapse" id="commets-collapse-{{ $goal->id }}">

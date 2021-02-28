@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function() {
         // Route::delete('/', 'UserController@destroy')->name('destroy');
     });
 
-    Route::resource('/comments', 'CommentController')->only(['store']);
+    Route::resource('/comments', 'CommentController')->only(['store', 'destroy']);
     Route::resource('/goals', 'Goal\GoalController');
     Route::post('update-progress/{goal}', 'Goal\GoalController@updateProgress')->where('goal', '[0-9]+');
 });

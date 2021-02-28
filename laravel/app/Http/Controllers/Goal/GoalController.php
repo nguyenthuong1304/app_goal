@@ -37,7 +37,9 @@ class GoalController extends Controller
             }
         };
 
-        $goals = $query->with(['user', 'comments'])
+        $goals = $query->with(['user', 'comments' => function ($q) {
+                            $q->orderBy('created_at', 'desc');
+                       }])
                        ->withCount('comments')
                        ->orderBy('is_pin', 'desc')
                        ->orderBy('created_at', 'desc')

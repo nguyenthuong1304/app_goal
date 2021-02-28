@@ -5,8 +5,17 @@ $(function() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        beforeSend: xhr => $('.loading').removeClass('hide'),
-        complete: (xhr, stat) => $('.loading').addClass('hide'),
+        beforeSend: _ => $('.loading').removeClass('hide'),
+        complete: _ => $('.loading').addClass('hide'),
+        error: err => {
+            const error = err.responseJSON;
+            const status = err.status;
+            if (status === 403) {
+                toastr.warning(error.message);
+            } else if (status === 500) {
+                toastr.warning(error?.message || 'Có lỗi vui lòng thử lại');
+            }
+        }
     });
 
     // refresh input validate

@@ -50,7 +50,31 @@ $(function () {
             formReqAjax($(`#comment-goal-${goal_id}`), {
                 url: 'comments',
                 dataType: "html",
-            }, res => $('#append-comment-'+goal_id).html(res));
+            }, res => {
+                $this.val('');
+                if (!$('#commets-collapse-'+goal_id).hasClass('show')) {
+                    $(`a[href="#commets-collapse-${goal_id}"`).click();
+                }
+                $('#append-comment-'+goal_id).html(res);
+                $(`#count-cmt-${goal_id}`).text($('#append-comment-'+goal_id).children().length);
+            });
         }
+    });
+
+    $('body').on('click', '.delete-cmt', function (e) {
+        e.preventDefault();
+        const $this = $(this),
+              id = $this.data('id');
+        
+        ajaxReq({
+            url: `comments/${id}`,
+            data: {
+                _method: 'delete',
+            },
+            method: "POST",
+        }, res => {
+            $(`#count-cmt-${$this.data('goal-id')}`).text(res.count);
+            $this.closest('.item-cmt').remove();
+        })
     });
 });

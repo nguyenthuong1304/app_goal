@@ -25,10 +25,7 @@ export const validateSize = file => {
 export const readURL = file => {
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            $('img#profileImage').attr('src', e.target.result);
-        }
-
+        reader.onload = e => $('img#profileImage').attr('src', e.target.result);
         reader.readAsDataURL(file);
     }
 }
@@ -49,14 +46,8 @@ export const formReqAjax = (form, req, callbackSuccess, callbackError = null) =>
                 input.addClass('is-invalid');
                 input.after(`<div class="invalid-feedback">${errors[errorKey][0]}</div>`);
             });
-        } else if (status === 403) {
-            toastr.warning(error.message);
         } else if (status === 500) {
-            callbackError
-                ? callbackError(err)
-                : toastr.warning(error.message);
-        } else {
-            toastr.error(error.message);
+            callbackError && callbackError(err);
         }
     });
 }

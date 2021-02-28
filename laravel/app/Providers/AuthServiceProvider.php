@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Meeting' => 'App\Policies\MeetingPolicy',
         'App\Models\User' => 'App\Policies\UserPolicy',
         'App\Models\Goal' => 'App\Policies\GoalPolicy',
+        'App\Models\Comment' => 'App\Policies\CommentPolicy',
     ];
 
     /**
