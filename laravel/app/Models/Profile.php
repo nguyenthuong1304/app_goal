@@ -11,18 +11,18 @@ class Profile extends Model
         'socials',
         'experiences',
         'about_me',
-        'skill',
+        'skills',
         'user_id',
     ];
 
-    protected $cats = [
-        'socials' => 'array',
+    protected $casts = [
+        // 'socials' => 'array',
         'experiences' => 'array',
-        'about_me' => 'array',
-        'skill' => 'array',
+        // 'about_me' => 'array',
+        'skills' => 'array',
     ];
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

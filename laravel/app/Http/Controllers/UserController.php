@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
@@ -38,7 +39,7 @@ class UserController extends Controller
 
     public function edit(string $name)
     {
-        $user = User::where('name', $name)->first();
+        $user = User::with('profile')->where('name', $name)->first();
         $this->authorize('update', $user);
 
         return view('users.edit', ['user' => $user]);
@@ -71,7 +72,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        session()->flash('msg_success', 'パスワードを更新しました');
+        session()->flash('msg_success', 'Cập nhật mật khẩu thành công');
         return redirect()->route('users.show',['name' => $user->name]);
     }
 
@@ -149,8 +150,14 @@ class UserController extends Controller
         return ['name' => $name, 'count' => $user->followers()->count()];
     }
 
-    public function profileUpdate(Request $request)
+    public function profileUpdate(ProfileRequest $request)
     {
-        # code...
+        $request->user()->profile()->updateOrCreate(
+            ['user_id' => $request->user()->id],
+            $request->all()
+        );
+        session()->flash('msg_success', 'Cập nhật chi tiết hồ sơ thành công');
+
+        return redirect()->back();
     }
 }
