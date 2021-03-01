@@ -1,13 +1,18 @@
 FROM php:7.4-fpm
 
-# composerのインストール (マルチステージビルド)
-COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
+# COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# npmのインストール (マルチステージビルド)
-COPY --from=node:10.22 /usr/local/bin /usr/local/bin
-COPY --from=node:10.22 /usr/local/lib /usr/local/lib
+#COPY --from=node:10.22 /usr/local/bin /usr/local/bin
+#COPY --from=node:10.22 /usr/local/lib /usr/local/lib
 
-#パッケージ管理ツールapt-getの更新と必要パッケージのインストール
+RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
+ && git clone https://github.com/nodejs/node.git \
+ && cd node \
+ && ./configure \
+ && make \
+ && sudo make install
+
 RUN apt-get update \
 && apt-get install -y \
 git \

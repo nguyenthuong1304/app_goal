@@ -29,8 +29,10 @@ services:
       - ~/.bashrc:/root/.bashrc
     depends_on:
       - db
+      - redis
     links:
       - db
+      - redis
     networks:
       - my_network
 
@@ -49,18 +51,31 @@ services:
       - docker-volume:/var/lib/mysql
     networks:
       - my_network
-#    networks:
-#      - my_network
+
+  # Redis server
+  redis:
+    image: redis:latest
+    container_name: db-redis
+    volumes:
+      - docker-volume:/var/lib/redis
+    networks:
+      - my_network
+    ports:
+      - 6379:6379
+
+  # Phpmyadmin (optional)
 #  phpmyadmin:
 #    container_name: phpmyadmin
 #    image: phpmyadmin/phpmyadmin
 #    environment:
 #    - PMA_ARBITRARY=1
 #    - PMA_HOSTS=db
-#    - PMA_USER=${DB_USERNAME}
-#    - PMA_PASSWORD=${DB_PASSWORD}
+#    - PMA_USER=root
+#    - PMA_PASSWORD=
 #    ports:
 #    - 8080:80
+#    networks:
+#      - my_network
 
 networks:
   my_network:

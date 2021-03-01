@@ -109,6 +109,7 @@
       <path value="$PROJECT_DIR$/laravel/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/laravel/vendor/league/oauth1-client" />
       <path value="$PROJECT_DIR$/laravel/vendor/laravel/socialite" />
+      <path value="$PROJECT_DIR$/laravel/vendor/predis/predis" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

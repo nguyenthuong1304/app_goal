@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ArticleController extends Controller
 {
