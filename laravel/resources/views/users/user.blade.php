@@ -1,11 +1,17 @@
 <div class="card my-4">
     <div class="card-body">
         <div class="d-flex flex-row row">
-
             <div class="col-3 text-center">
                 <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
                     <img class="profile-icon rounded-circle" src="{{ $user->profile_image ?? $user->avatar }}" alt="Biểu tượng hồ sơ">
                 </a>
+                <a
+                    data-toggle="collapse"
+                    href="#collapseProfile"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseProfile"
+                >Hiện / ẩn hồ sơ</a>
             </div>
             <div class="col-9">
                 <div class="row mb-2">
@@ -16,7 +22,7 @@
                             </a>
                         </h2>
                         <p class="text-primary m-0">
-                            <i class="fas fa-clock mr-2"></i>{{ __('common.form.goal') }}：{{ $user->wake_up_time->format('H:i') }}
+                            <i class="fas fa-briefcase"></i> {{ $user->profile->job ?? 'Đang cập nhật' }}
                         </p>
                     </div>
                     <div class="col-7 row">
@@ -54,9 +60,13 @@
                     </div>
                 </div>
                 <div class="mb-4">
+                    @foreach ($user->profile->socials ?? [] as $k => $social)
+                        <a href="{{ $social }}" class="mr-2" target="_blank">
+                            <i class="fab fa-lg fa-{{ $k }}"></i>
+                        </a>
+                    @endforeach
                     <p class="small m-0 text-muted">
-                        ( {{ $user->wake_up_time->copy()->subHour($user->range_of_success)->format('H:i') }} 〜 {{ $user->wake_up_time->format('H:i') }}
-                        {{ __('common.text_free') }} )
+                        <i class="fas fa-phone"></i> {{ $user->profile->phone ?? 'Đang cập nhật' }}
                     </p>
                 </div>
                 <div class="row">
@@ -66,6 +76,74 @@
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    {{--    profile in here--}}
+    <div class="card-body">
+        <div class="collapse show not-scroll" id="collapseProfile">
+            <div class="card card-body">
+                @if($user->profile)
+                    <div class="rounded bg-white shadow-dark padding-30">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p>{!! nl2br(e( $user->self_introduction )) !!}</p>
+                                <div class="mt-3 text-center">
+                                    <a href="javascript:toastr.info('Chức năng đang được phát triển!');" class="btn btn-primary">Download CV</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                @foreach($user->profile->skills as $skill)
+                                    <div class="skill-item">
+                                        <div class="skill-info clearfix">
+                                            <h6 class="float-left mb-3 mt-0">{{ $skill['skill'] ?? '-'}}</h6>
+                                            <span class="float-right">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <span class="fa fa-star @if($i <= ($skill['value'] ?? 0))checked @endif"></span>
+                                                @endfor
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 rounded card p-3 mb-2">
+                                @foreach($user->profile->educations as $education)
+                                    <div class="timeline-container">
+                                        <div class="content">
+                                            <span class="time">{{ $education['from'] .' - ' }} {{ $education['to'] == date('Y') ? 'Hiện tại' : $education['to'] }}</span>
+                                            <h5 class="title">{{ $education['detail'] }}</h5>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <span class="line"></span>
+                            </div>
+                            <div class="col-md-6 rounded card p-3 mb-2">
+                                @foreach($user->profile->experiences as $experience)
+                                    <div class="timeline-container">
+                                        <div class="content">
+                                            <span class="time">{{ $experience['from'] .' - ' }} {{ $experience['to'] == date('Y') ? 'Hiện tại' : $education['to'] }}</span>
+                                            <h5 class="title">{{ $experience['detail'] }}</h5>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <span class="line"></span>
+                            </div>
+                            <div class="col-md-6 rounded card p-3 mb-2">
+                                @foreach($user->profile->achievements as $achievement)
+                                    <div class="timeline-container">
+                                        <div class="content">
+                                            <span class="time">{{ $achievement['date']}}</span>
+                                            <h5 class="title">{{ $achievement['detail'] }}</h5>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

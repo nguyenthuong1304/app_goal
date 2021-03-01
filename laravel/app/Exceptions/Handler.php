@@ -42,10 +42,21 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException)  {
+            if ($request->ajax()) {
+                return response()->json([
+                    'status_code' => $exception->getCode(),
+                    'message' => $exception->getMessage(),
+                ], $exception->getCode());
+            }
+            session()->flash('msg_warning', $exception->getMessage());
+
+            return redirect()->route('articles.index');
+        }
         return parent::render($request, $exception);
     }
 }

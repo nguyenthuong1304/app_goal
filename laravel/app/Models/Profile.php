@@ -23,7 +23,6 @@ class Profile extends Model
     protected $casts = [
         'socials' => 'array',
         'experiences' => 'array',
-        // 'about_me' => 'array',
         'skills' => 'array',
         'educations' => 'array',
         'achievements' => 'array',

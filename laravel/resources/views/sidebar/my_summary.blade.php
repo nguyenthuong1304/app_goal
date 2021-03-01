@@ -4,7 +4,7 @@
             <p class="h1 mb-0">
                 <img src="{{ $superUser->profile_image ?? $superUser->avatar }}" alt="Biểu tượng hồ sơ" class="profile-icon rounded-circle">
             </p>
-            <p class="h2 mt-2">{{ $superUser->name }} ({{ $superUser->age }})</p>
+            <p class="h2 mt-2">{{ $superUser->name }} <small>({{ $superUser->age . 'tuổi' ?? '-' }})</small></p>
             <p class="h5 mt-3">
             {{ $superUser->self_introduction }}
             </p>

@@ -7,23 +7,23 @@
     <div class="form-group block-jobs">
         <label for="job">Kinh nghiệm làm việc : </label>
         <a href="#"
-            alt="Thêm công việc" 
+            alt="Thêm công việc"
             class="btn-add float-right"
-            data-html='@include('users.form.job_block', ["key" => "key-index", "nameInput" => "experiences"])'
+            data-html='@include('users.form.general_block', ["key" => "key-index", "nameInput" => "experiences"])'
             data-append=".block-jobs"
         >
             <i class="fas fa-plus-square"></i>Thêm
         </a>
         <div id="job-block">
             @php
-                $experiences = old('experiences') ??  $user->profile->experiences ?? []; 
+                $experiences = old('experiences') ??  $user->profile->experiences ?? [];
                 $nameInput = "experiences";
-                $object = null; 
+                $object = null;
             @endphp
             @foreach($experiences as $key => $object)
                 @include('users.form.general_block', compact('object', 'key', 'nameInput'))
             @endforeach
-            @if (!count($experiences)) 
+            @if (!count($experiences))
                 @include('users.form.general_block', ['key' => 0, 'nameInput' => $nameInput])
             @endif
         </div>
@@ -31,7 +31,7 @@
     <div class="form-group block-skills">
         <label for="job">Kỹ năng : </label>
         <a href="#"
-            alt="Thêm công việc" 
+            alt="Thêm công việc"
             class="btn-add float-right"
             data-html='@include('users.form.skill_block', ["key" => "key-index"])'
             data-append=".block-skills"
@@ -43,7 +43,7 @@
             @foreach($skills as $key => $skill)
                 @include('users.form.skill_block', compact('skill', 'key'))
             @endforeach
-            @if (!count($skills)) 
+            @if (!count($skills))
                 @include('users.form.skill_block', ['key' => 0])
             @endif
         </div>
@@ -52,7 +52,7 @@
         @php $object = null; @endphp
         <label for="job">Học vấn: </label>
         <a href="#"
-            alt="Thêm công việc" 
+            alt="Thêm công việc"
             class="btn-add float-right"
             data-html='@include('users.form.general_block', ["key" => "key-index", "nameInput" => "educations"])'
             data-append=".block-educations"
@@ -60,14 +60,14 @@
             <i class="fas fa-plus-square"></i>Thêm
         </a>
         <div id="job-block">
-            @php 
+            @php
                 $educations = old('educations') ??  $user->profile->educations ?? [];
-                $nameInput = "educations"; 
+                $nameInput = "educations";
             @endphp
             @foreach($educations as $key => $object)
                 @include('users.form.general_block', compact('object', 'key', 'nameInput'))
             @endforeach
-            @if (!count($educations)) 
+            @if (!count($educations))
                 @include('users.form.general_block', ['key' => 0, 'nameInput' => $nameInput])
             @endif
         </div>
@@ -76,23 +76,22 @@
         <label for="job">Thành tựu: </label>
         @php $object = null; @endphp
         <a href="#"
-            alt="Thêm công việc" 
+            alt="Thêm công việc"
             class="btn-add float-right"
-            data-html='@include('users.form.general_block', ["key" => "key-index", "nameInput" => "achievements"])'
+            data-html='@include('users.form.achievement_block', ["key" => "key-index"])'
             data-append=".block-achievements"
         >
             <i class="fas fa-plus-square"></i>Thêm
         </a>
         <div id="job-block">
-            @php 
+            @php
                 $achievements = old('achievements') ??  $user->profile->achievements ?? [];
-                $nameInput = "achievements";
             @endphp
-            @foreach($achievements as $key => $object)
-                @include('users.form.general_block', compact('object', 'key', 'nameInput'))
+            @foreach($achievements as $key => $achievement)
+                @include('users.form.achievement_block', compact('achievement', 'key'))
             @endforeach
-            @if (!count($achievements)) 
-                @include('users.form.general_block', ['key' => 0, 'nameInput' => $nameInput])
+            @if (!count($achievements))
+                @include('users.form.achievement_block', ['key' => 0])
             @endif
         </div>
     </div>
@@ -105,8 +104,8 @@
                 </div>
                 <div class="col-md-10">
                     <input
-                        type="text" 
-                        class="form-control form-control-sm" 
+                        type="text"
+                        class="form-control form-control-sm"
                         name="socials[{{ $social }}]"
                         value="{{ $user->profile->socials[$social] ?? old("socials.$social") }}"
                         placeholder="Nhập địa chỉ {{ $social }}"
@@ -115,13 +114,30 @@
             </div>
         @endforeach
     </div>
+    <div class="form-group block-socials">
+        <label for="job">Số điện thoại : </label>
+        <div class="row mb-2 d-flex align-items-center">
+            <div class="col-md-2">
+                <i class="fab fa-2x fa-phone"></i>
+            </div>
+            <div class="col-md-10">
+                <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="phone"
+                    value="{{ $user->profile->phone ?? old("phone") }}"
+                    placeholder="Nhập số điện thoại"
+                >
+            </div>
+        </div>
+    </div>
     <div class="form-group">
-        <label for="about_me">Mục tiêu nghề nghiệp</label> 
+        <label for="about_me">Mục tiêu nghề nghiệp</label>
         <small class="blue-grey-text">（Không quá 200 kí tự）</small>
         <textarea
-            class="form-control" 
-            type="text" 
-            id="about_me" 
+            class="form-control"
+            type="text"
+            id="about_me"
             name="about_me"
             placeholder="Developer, SEOer, ..."
         >{{ $user->profile->about_me ?? old('about_me') }}</textarea>

@@ -114,21 +114,25 @@
     }
 }
 
-.collapse {
+.collapse:not(.not-scroll) {
     max-height: 500px;
     overflow-y: scroll;
+}
+
+.fa-star.checked {
+    color: orange;
 }
 
 ::-webkit-scrollbar {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb{
-    background: #888; 
+    background: #888;
     border-radius: 10px;
-    
+
     &:hover {
 		background: #555;
 	}

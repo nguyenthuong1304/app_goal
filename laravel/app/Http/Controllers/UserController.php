@@ -19,7 +19,10 @@ class UserController extends Controller
 
     public function show(string $name, Request $request)
     {
-        $user = $this->user->withCountAchievementDays($name);
+        $user = $this->user->where('name', $name)
+                           ->with('profile')
+                           ->first();
+
         $articles = $user->articles()
                          ->orderBy('created_at', 'desc')
                          ->paginate(5);

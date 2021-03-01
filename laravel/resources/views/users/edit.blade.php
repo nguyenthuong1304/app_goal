@@ -3,10 +3,6 @@
 @include('nav')
 @section('style')
 <style>
-    .fa-star.checked {
-      color: orange;
-    }
-
     .fa-star {
         margin-left: 5px;
     }
@@ -128,6 +124,10 @@
                 $(this).prevAll().each((_, item) => $(item).addClass('checked'));
                 $(this).addClass('checked');
                 parent.find('input').val(parent.find('span.checked').length);
+            });
+
+            $('body').on('click', '.delete-this', function () {
+                $(this).closest('.this-delete').remove();
             });
         });
     </script>

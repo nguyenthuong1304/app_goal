@@ -25,27 +25,47 @@ class ProfileRequest extends FormRequest
     {
         return [
             'job' => 'required|max:100',
-            'experiences.*.from' => 'nullable|date|before:tomorrow|required_with:experiences.*.detail',
-            'experiences.*.to' => 'nullable|date|before:tomorrow|required_with:experiences.*.detail',
+            'experiences.*.from' => 'nullable|max:'.date('y').'|required_with:experiences.*.detail|regex:/^[0-9]+$/',
+            'experiences.*.to' => 'nullable|max:'.date('y').'|required_with:experiences.*.detail|regex:/^[0-9]+$/',
             'experiences.*.detail' => 'required_with:experiences.*.date|max:200',
-            'educations.*.from' => 'nullable|date|before:tomorrow|required_with:experiences.*.detail',
-            'educations.*.to' => 'nullable|date|before:tomorrow|required_with:experiences.*.detail',
+            'educations.*.from' => 'nullable|max:'.date('y').'|required_with:experiences.*.detail|regex:/^[0-9]+$/',
+            'educations.*.to' => 'nullable|max:'.date('y').'|required_with:experiences.*.detail|regex:/^[0-9]+$/',
             'educations.*.detail' => 'required_with:experiences.*.date|max:200',
-            'achievements.*.from' => 'nullable|date|before:tomorrow|required_with:experiences.*.detail',
-            'achievements.*.to' => 'nullable|date|before:tomorrow|required_with:experiences.*.detail',
+            'achievements.*.date' => 'nullable|regex:/^[0-9]+$/',
             'achievements.*.detail' => 'required_with:experiences.*.date|max:200',
             'skills.*.skill' => 'max:20|required_with:skills.*.value',
             'skills.*.value' => 'nullable|required_with:skill.*.date|max:5|min:0',
             'socials.*' => 'nullable|url',
             'about_me' => 'max:1000',
+            'phone' => 'nullable|max:15|min:8|regex:/^[0-9]+$/',
         ];
     }
 
-    public function passedValidation()
+    public function prepareForValidation()
     {
-        $this->experiences = array_values($this->experiences);
-        $this->educations = array_values($this->educations);
-        $this->achievements = array_values($this->achievements);
-        $this->skills = array_values($this->skills);
+        $experiences = array_map(function ($item) {
+            $item['from'] = ltrim($item['from'], '0');
+            $item['to'] = ltrim($item['to'], '0');
+            return $item;
+        }, array_values($this->experiences));
+
+        $educations = array_map(function ($item) {
+            $item['from'] = ltrim($item['from'], '0');
+            $item['to'] = ltrim($item['to'], '0');
+            return $item;
+        }, array_values($this->educations));
+
+        $achievements = array_map(function ($item) {
+            $item['date'] = ltrim($item['date'], '0');
+            return $item;
+        }, array_values($this->achievements));
+        $skills = array_values($this->skills);
+
+        $this->merge([
+            'experiences' => $experiences,
+            'educations' => $educations,
+            'achievements' => $achievements,
+            'skills' => $skills,
+        ]);
     }
 }

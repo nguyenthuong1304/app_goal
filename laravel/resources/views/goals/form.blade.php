@@ -45,13 +45,13 @@
 </div>
 @endif
 <div class="row">
-    <div class="form-group w-40 col-md-5">
+    <div class="form-group w-40 col-md-6 text-center">
         <label for="remind_update">
             Nhận thông báo nhắc nhở hàng tuần
         </label>
         <input type="checkbox" id="remind_update" name="remind_update" @if($goal->remind_update ?? old('remind_update')) checked @endif value="1">
     </div>
-    <div class="form-group w-40 col-md-5">
+    <div class="form-group w-40 col-md-6 text-center">
         <label for="is_pin">
             Ghim mục tiêu này ?
         </label>
