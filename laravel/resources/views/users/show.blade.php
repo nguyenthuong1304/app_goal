@@ -41,9 +41,33 @@
             <div class="col-md-9">
                 @include('users.user')
                 @include('users.tabs', ['hasArticles' => true, 'hasLikes' => false])
-                @include('articles.list', compact('articles'))
+                <div id="append-new-article">
+                    @include('articles.list', compact('articles'))
+                </div>
                 @include('articles.sppiner')
             </div>
         </div>
     </div>
 @endsection
+@section('script')
+    <script>
+        $(function() {
+            $('a.my-post, a.my-post-favorite').click(function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('active')) {
+                    const url = $(this).data('href'),
+                          $this = $(this);
+                          
+                    $.get(url, res => {
+                        $(this).closest('.nav-tabs')
+                            .find('a')
+                            .each((_, item) => $(item).removeClass('active'));
+
+                        $this.addClass('active');
+                        $('#append-new-article').html(res.html);
+                    });
+                }
+            }); 
+        });
+    </script>
+@stop
