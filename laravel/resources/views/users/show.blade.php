@@ -57,7 +57,6 @@
                 if (!$(this).hasClass('active')) {
                     const url = $(this).data('href'),
                           $this = $(this);
-                          
                     $.get(url, res => {
                         $(this).closest('.nav-tabs')
                             .find('a')
@@ -65,6 +64,9 @@
 
                         $this.addClass('active');
                         $('#append-new-article').html(res.html);
+                        res.next
+                            ? $('.infinity-scroll').attr('href', res.next)
+                            : $('.infinity-scroll').addClass('hide');
                     });
                 }
             }); 
